@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+    <head>
+        {% if title %}
+        <title>Home Page - {{ title }}</title>
+        {% else %}
+        <title>Home Page - PIU</title>
+        {% endif %}
+    </head>
+    <body>
+        <div> PIU Score Submitter : <a href="/home">Home</a></div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>
