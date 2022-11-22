@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, flash, redirect, url_for
 from app import web
 from app.forms import LoginForm
 
@@ -24,7 +24,7 @@ def index():
     return render_template("main.html", user = user)
 
 @web.route('/main')
-def index1():
+def main():
     return base(
         user1 = "Ronald",
         user2 = "Bivan",
@@ -33,7 +33,7 @@ def index1():
     )
 
 @web.route('/home')
-def index2():
+def home():
     return base(
         user1 = "Bivan",
         user2 = "Ronald",
@@ -41,7 +41,11 @@ def index2():
         address = "main2.html"
     )
 
-@web.route('/login')
+@web.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        flash('Login requested for user = {}, remember_me = {}'.format(
+            form.username.data, form.remember_me.data))
+        return redirect(url_for('main'))
     return render_template("login.html", title = "Sign In", form = form)

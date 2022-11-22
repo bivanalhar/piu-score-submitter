@@ -7,15 +7,23 @@
         <title>Home Page - PIU</title>
         {% endif %}
     </head>
-    <div>
-        PIU Score Submitter: <br>
-        <a href = '/'>Mainpage</a><br>
-        <a href = '/main'>Primary</a><br>
-        <a href = '/home'>Homepage</a><br>
-        <a href = '/login'>Login</a><br>
-    </div>
-    <hr>
     <body>
+        <div>
+            PIU Score Submitter: <br>
+            <a href = "{{ url_for('main') }}">Primary</a><br>
+            <a href = "{{ url_for('home') }}">Homepage</a><br>
+            <a href = "{{ url_for('login') }}">Login</a><br>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </body>
 </html>
