@@ -1,12 +1,12 @@
 {% extends "index.html" %}
 
 {% block content %}
-    <div> PIU Score Submitter : <a href="/home">Home</a></div>
+    <div> PIU Score Submitter : <a href="/">Main</a></div>
     <hr>
     <h2>Welcome, {{ user.username }}, to PIU Score Submitter</h2>
     {% for post in posts %}
     <div>
-        <p>{{ post.author }} complains : <b>{{ post.body }}</b></p>
+        <p>{{ post.author }} says : <b>{{ post.body }}</b></p>
     </div>
     {% endfor %}
 {% endblock %}

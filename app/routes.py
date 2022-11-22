@@ -1,12 +1,10 @@
 from flask import render_template
 from app import web
 
-@web.route('/')
-@web.route('/home')
-def index():
-    user = {'username' : 'Bivan'}
+def base(user1, user2, msg, address):
+    user = {'username' : user1}
     posts = [
-        {'author' : 'Ronald', 'body' : 'Teehee lemme torture you all with my UCS'},
+        {'author' : user2, 'body' : msg},
         {'author' : 'Aubrey', 'body' : 'OMG please no more, Senpai'},
         {'author' : 'EL', 'body' : 'walao cannot anymore lah, my body really hurts now'},
         {'author' : 'Kelvin', 'body' : 'NICEEE finally some display of passion'},
@@ -14,7 +12,25 @@ def index():
         {'author' : 'Zhiquan', 'body' : 'Eeeehhh???'}
     ]
     return render_template(
-        "main.html", 
+        address, 
         user = user,
         posts = posts
+    )
+
+@web.route('/')
+def index2():
+    return base(
+        user1 = "Ronald",
+        user2 = "Bivan",
+        msg = 'Aigoo why such nonsense UCS again leh..',
+        address = "main.html"
+    )
+
+@web.route('/home')
+def index():
+    return base(
+        user1 = "Bivan",
+        user2 = "Ronald",
+        msg = 'Teehee lemme torture you all with my UCS',
+        address = "main2.html"
     )
