@@ -12,7 +12,11 @@
             PIU Score Submitter: <br>
             <a href = "{{ url_for('entrance') }}">Main</a><br>
             <a href = "{{ url_for('home') }}">Homepage</a><br>
+            {% if current_user.is_anonymous %}
             <a href = "{{ url_for('login') }}">Login</a><br>
+            {% else %}
+            <a href = "{{ url_for('logout') }}">Logout</a><br>
+            {% endif %}
         </div>
         <hr>
         {% with messages = get_flashed_messages() %}

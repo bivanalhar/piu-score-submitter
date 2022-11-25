@@ -1,15 +1,19 @@
-from flask import render_template, flash, redirect, url_for
-from app import web
-from app.forms import LoginForm
+from flask import render_template, flash, redirect, url_for, request
+from flask.login import current_user, login_user, logout_user, login_required
+from werkzeug.urls import url_parse
+
+from app import web, db
+from app.models import User
+from app.forms import LoginForm, RegistrationForm
 
 @web.route('/')
+@login_required
 def entrance():
-    user = {'username' : "PIUNoobs"}
-    return render_template("entrance.html", user = user)
+    return render_template("entrance.html")
 
 @web.route('/home')
+@login_required
 def home():
-    user = {'username' : "PIUNoobs"}
     posts = [
         {'author' : 'Ronald', 'body' : 'hmm feels so stressed from work. Let\'s make UCS hihihi'},
         {'author' : 'Bivan', 'body' : 'Aigoo what other nonsense UCS u wanna come up with this time leh..'},
@@ -21,15 +25,50 @@ def home():
     ]
     return render_template(
         "main.html", 
-        user = user,
         posts = posts
     )
 
 @web.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     form = LoginForm()
     if form.validate_on_submit():
-        flash('Login requested for user = {}, remember_me = {}'.format(
-            form.username.data, form.remember_me.data))
-        return redirect(url_for('home'))
+        user = User.query.filter_by(username = form.username.data).first()
+        if user is None:
+            flash("Invalid username")
+            return redirect(url_for("login"))
+        
+        if not User.check_password(form.password.data):
+            flash("this username has mismatch password")
+            return redirect(url_for("login"))
+        
+        login_user(user, remember = form.remember_me.data)
+
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != "":
+            next_page = url_for("home")
+        return redirect(next_page)
     return render_template("login.html", title = "Sign In", form = form)
+
+@web.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username = form.username.data, email = form.email.data)
+        user.set_password(form.password.data)
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash("Congratulations, {}, for now you have been officially registered".format(form.username.data))
+        return redirect(url_for('login'))
+    return render_template("signup.html", title = "Sign Up", form = form)
+
+@web.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
