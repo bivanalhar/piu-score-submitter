@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request
-from flask.login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 from app import web, db
@@ -40,7 +40,7 @@ def login():
             flash("Invalid username")
             return redirect(url_for("login"))
         
-        if not User.check_password(form.password.data):
+        if not user.check_password(form.password.data):
             flash("this username has mismatch password")
             return redirect(url_for("login"))
         
@@ -51,6 +51,16 @@ def login():
             next_page = url_for("home")
         return redirect(next_page)
     return render_template("login.html", title = "Sign In", form = form)
+
+@web.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username = username).first_or_404()
+    posts = [
+        {"author" : user, "body" : "Testing #1"},
+        {"author" : user, "body" : "Testing #2"}
+    ]
+    return render_template("user.html", user = user, posts = posts)
 
 @web.route('/signup', methods=['GET', 'POST'])
 def signup():
