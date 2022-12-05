@@ -1,0 +1,76 @@
+2022-12-05 17:42:56,422 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:48]
+2022-12-05 17:43:07,136 ERROR: Exception on /edit_profile [GET] [in /Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py:1741]
+Traceback (most recent call last):
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/routes.py", line 103, in edit_profile
+    return render_template("edit_profile.html", title = "Edit Profile", form = form)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/edit_profile.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/base.html", line 32, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/edit_profile.html", line 6, in block 'content'
+    {{ form.hidden_tag() }}
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 119, in hidden_tag
+    return Markup("\n".join(str(f) for f in hidden_fields(fields or self)))
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 119, in <genexpr>
+    return Markup("\n".join(str(f) for f in hidden_fields(fields or self)))
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 110, in hidden_fields
+    for f in fields:
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/wtforms/form.py", line 55, in __iter__
+    return iter(self._fields.values())
+AttributeError: 'EditProfileForm' object has no attribute '_fields'
+2022-12-05 17:43:12,202 ERROR: Exception on /edit_profile [GET] [in /Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py:1741]
+Traceback (most recent call last):
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/routes.py", line 103, in edit_profile
+    return render_template("edit_profile.html", title = "Edit Profile", form = form)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/edit_profile.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/base.html", line 32, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/edit_profile.html", line 6, in block 'content'
+    {{ form.hidden_tag() }}
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 119, in hidden_tag
+    return Markup("\n".join(str(f) for f in hidden_fields(fields or self)))
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 119, in <genexpr>
+    return Markup("\n".join(str(f) for f in hidden_fields(fields or self)))
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 110, in hidden_fields
+    for f in fields:
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/wtforms/form.py", line 55, in __iter__
+    return iter(self._fields.values())
+AttributeError: 'EditProfileForm' object has no attribute '_fields'
+2022-12-05 17:45:32,953 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:48]
