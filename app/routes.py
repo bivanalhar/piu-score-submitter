@@ -4,7 +4,15 @@ from werkzeug.urls import url_parse
 
 from app import web, db
 from app.models import User
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm
+
+from datetime import datetime
+
+@web.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
 
 @web.route('/')
 @login_required
@@ -77,6 +85,22 @@ def signup():
         flash("Congratulations, {}, for now you have been officially registered".format(form.username.data))
         return redirect(url_for('login'))
     return render_template("signup.html", title = "Sign Up", form = form)
+
+@web.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+
+        flash("Your changes has been saved")
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    return render_template("edit_profile.html", title = "Edit Profile", form = form)
 
 @web.route('/logout')
 def logout():
