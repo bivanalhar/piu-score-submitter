@@ -3,8 +3,8 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 from app import web, db
-from app.models import User
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
+from app.models import User, Score
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, SubmissionForm1
 
 from datetime import datetime
 
@@ -15,21 +15,11 @@ def before_request():
         db.session.commit()
 
 @web.route('/')
-@login_required
-def entrance():
-    return render_template("entrance.html")
-
 @web.route('/home')
 @login_required
 def home():
     posts = [
-        {'author' : 'Ronald', 'body' : 'hmm feels so stressed from work. Let\'s make UCS hihihi'},
-        {'author' : 'Bivan', 'body' : 'Aigoo what other nonsense UCS u wanna come up with this time leh..'},
-        {'author' : 'Aubrey', 'body' : 'OMG please no more, Senpai'},
-        {'author' : 'EL', 'body' : 'walao cannot anymore lah, my body really hurts now'},
-        {'author' : 'Kelvin', 'body' : 'NICEEE finally some display of passion'},
-        {'author' : 'Sky', 'body' : 'okay sure.. do all you want!!'},
-        {'author' : 'Zhiquan', 'body' : 'Eeeehhh???'}
+        {'comp_name' : 'Let\'s have a trial competition'}
     ]
     return render_template(
         "main.html", 
@@ -60,15 +50,35 @@ def login():
         return redirect(next_page)
     return render_template("login.html", title = "Sign In", form = form)
 
+@web.route('/piucomp1', methods=['GET', 'POST'])
+@login_required
+def piucomp1():
+    form = SubmissionForm1(current_user.username)
+    if form.validate_on_submit():
+        score = Score(username = form.username.data, perfect = form.perfect.data, great = form.great.data,
+            good = form.good.data, bad = form.bad.data, miss = form.miss.data)
+        score.set_totalScore(form.perfect.data, form.great.data, form.good.data, 
+            form.bad.data, form.miss.data)
+        db.session.add(score)
+        db.session.commit()
+
+        flash("Congratulations, {}, for you have successfully uploaded your score".format(form.username.data))
+        return redirect(url_for('piucomp1'))
+    return render_template("piucomp1.html", title = "PIU Comp 1", form = form)
+
 @web.route('/user/<username>')
 @login_required
 def user(username):
     user = User.query.filter_by(username = username).first_or_404()
-    posts = [
-        {"author" : user, "body" : "Testing #1"},
-        {"author" : user, "body" : "Testing #2"}
-    ]
-    return render_template("user.html", user = user, posts = posts)
+    scores = Score.query.filter_by(username = username).all()
+
+    max_score, cur_details = 0, None
+    if len(scores) > 0:
+        for s in scores:
+            if s.totalScore > max_score:
+                max_score = s.totalScore
+                cur_details = s
+    return render_template("user.html", user = user, score = max_score, details = cur_details)
 
 @web.route('/signup', methods=['GET', 'POST'])
 def signup():

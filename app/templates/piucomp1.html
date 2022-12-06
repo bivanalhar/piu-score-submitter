@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Score Submission PIU Comp 1</h1><br>
+    <h3>Please submit your score below</h3>
+    <form action = "" method = "post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size = 32) }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.perfect.label }}<br>
+            {{ form.perfect(size = 16) }}<br>
+            {% for error in form.perfect.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.great.label }}<br>
+            {{ form.great(size = 16) }}<br>
+            {% for error in form.great.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.good.label }}<br>
+            {{ form.good(size = 16) }}<br>
+            {% for error in form.good.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.bad.label }}<br>
+            {{ form.bad(size = 16) }}<br>
+            {% for error in form.bad.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.miss.label }}<br>
+            {{ form.miss(size = 16) }}<br>
+            {% for error in form.miss.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+{% endblock %}

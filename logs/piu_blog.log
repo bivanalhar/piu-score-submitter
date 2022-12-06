@@ -1,5 +1,19 @@
-2022-12-05 17:42:56,422 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:48]
-2022-12-05 17:43:07,136 ERROR: Exception on /edit_profile [GET] [in /Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py:1741]
+2022-12-06 13:56:31,595 ERROR: Exception on /user/bivanalhar [GET] [in /Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py:1741]
+Traceback (most recent call last):
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/coercions.py", line 523, in _literal_coercion
+    return expr._bind_param(operator, element, type_=bindparam_type)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 4731, in _bind_param
+    return BindParameter(
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 1562, in __init__
+    self.type = _compared_to_type.coerce_compared_value(
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/type_api.py", line 782, in coerce_compared_value
+    _coerced_type = _resolve_value_to_type(value)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/sqltypes.py", line 3362, in _resolve_value_to_type
+    raise exc.ArgumentError(
+sqlalchemy.exc.ArgumentError: Object <User bivanalhar> is not legal as a SQL literal value
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 2525, in wsgi_app
     response = self.full_dispatch_request()
@@ -11,32 +25,48 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
   File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_login/utils.py", line 290, in decorated_view
     return current_app.ensure_sync(func)(*args, **kwargs)
-  File "/Users/bivanalhar/Documents/piu-score-submitter/app/routes.py", line 103, in edit_profile
-    return render_template("edit_profile.html", title = "Edit Profile", form = form)
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/templating.py", line 147, in render_template
-    return _render(app, template, context)
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/templating.py", line 130, in _render
-    rv = template.render(context)
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 1301, in render
-    self.environment.handle_exception()
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 936, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/edit_profile.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/base.html", line 32, in top-level template code
-    {% block content %}{% endblock %}
-  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/edit_profile.html", line 6, in block 'content'
-    {{ form.hidden_tag() }}
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 119, in hidden_tag
-    return Markup("\n".join(str(f) for f in hidden_fields(fields or self)))
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 119, in <genexpr>
-    return Markup("\n".join(str(f) for f in hidden_fields(fields or self)))
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 110, in hidden_fields
-    for f in fields:
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/wtforms/form.py", line 55, in __iter__
-    return iter(self._fields.values())
-AttributeError: 'EditProfileForm' object has no attribute '_fields'
-2022-12-05 17:43:12,202 ERROR: Exception on /edit_profile [GET] [in /Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py:1741]
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/routes.py", line 74, in user
+    scores = Score.query.filter_by(user_id = user).all()
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 1806, in filter_by
+    clauses = [
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 1807, in <listcomp>
+    _entity_namespace_key(from_entity, key) == value
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/operators.py", line 373, in __eq__
+    return self.operate(eq, other)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/orm/attributes.py", line 317, in operate
+    return op(self.comparator, *other, **kwargs)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/operators.py", line 373, in __eq__
+    return self.operate(eq, other)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/orm/properties.py", line 423, in operate
+    return op(self.__clause_element__(), *other, **kwargs)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/annotation.py", line 225, in __eq__
+    return self.__element.__class__.__eq__(self, other)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/operators.py", line 373, in __eq__
+    return self.operate(eq, other)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 870, in operate
+    return op(self.comparator, *other, **kwargs)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/operators.py", line 373, in __eq__
+    return self.operate(eq, other)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/type_api.py", line 77, in operate
+    return o[0](self.expr, op, *(other + o[1:]), **kwargs)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/default_comparator.py", line 101, in _boolean_compare
+    obj = coercions.expect(
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/coercions.py", line 188, in expect
+    resolved = impl._literal_coercion(
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/coercions.py", line 525, in _literal_coercion
+    self._raise_for_expected(element, err=err)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/coercions.py", line 510, in _raise_for_expected
+    return super(ExpressionElementImpl, self)._raise_for_expected(
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/sql/coercions.py", line 283, in _raise_for_expected
+    util.raise_(exc.ArgumentError(msg, code=code), replace_context=err)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 210, in raise_
+    raise exception
+sqlalchemy.exc.ArgumentError: SQL expression element or literal value expected, got <User bivanalhar>.
+2022-12-06 13:57:18,571 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:48]
+2022-12-06 13:57:41,867 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:48]
+2022-12-06 13:58:23,764 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:48]
+2022-12-06 14:05:01,216 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:48]
+2022-12-06 14:05:14,950 ERROR: Exception on /user/bivanalhar [GET] [in /Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py:1741]
 Traceback (most recent call last):
   File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 2525, in wsgi_app
     response = self.full_dispatch_request()
@@ -48,8 +78,8 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
   File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_login/utils.py", line 290, in decorated_view
     return current_app.ensure_sync(func)(*args, **kwargs)
-  File "/Users/bivanalhar/Documents/piu-score-submitter/app/routes.py", line 103, in edit_profile
-    return render_template("edit_profile.html", title = "Edit Profile", form = form)
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/routes.py", line 81, in user
+    return render_template("user.html", user = user, score = max_score, details = cur_details)
   File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/templating.py", line 147, in render_template
     return _render(app, template, context)
   File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/templating.py", line 130, in _render
@@ -58,19 +88,17 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 936, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/edit_profile.html", line 1, in top-level template code
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/user.html", line 1, in top-level template code
     {% extends "base.html" %}
   File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/base.html", line 32, in top-level template code
     {% block content %}{% endblock %}
-  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/edit_profile.html", line 6, in block 'content'
-    {{ form.hidden_tag() }}
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 119, in hidden_tag
-    return Markup("\n".join(str(f) for f in hidden_fields(fields or self)))
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 119, in <genexpr>
-    return Markup("\n".join(str(f) for f in hidden_fields(fields or self)))
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_wtf/form.py", line 110, in hidden_fields
-    for f in fields:
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/wtforms/form.py", line 55, in __iter__
-    return iter(self._fields.values())
-AttributeError: 'EditProfileForm' object has no attribute '_fields'
-2022-12-05 17:45:32,953 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:48]
+  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/user.html", line 22, in block 'content'
+    <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 2031, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 2020, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/werkzeug/routing/map.py", line 917, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'edit_profile'. Did you mean 'home' instead?
+2022-12-06 14:06:42,911 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:48]

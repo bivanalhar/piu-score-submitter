@@ -1,21 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <table>
-        <tr valign="top">
-            <td><img src="{{ user.avatar(128) }}"></td>
-            <td>
-                <h2>User: {{ user.username }}</h2>
-                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
-                {% if user == current_user %}
-                    <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
-                {% endif %}
-            </td>
-        </tr>
-    </table>
+    <style>
+        #signature table, th, td {
+            border: 1px solid blue;
+        }
+
+        #heading table, th, td {
+            border: 0px
+        }
+    </style>
+    <div id="heading" class="output">
+        <table>
+            <tr valign="top">
+                <td><img src="{{ user.avatar(128) }}"></td>
+                <td>
+                    <h2>User: {{ user.username }}</h2>
+                    {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+                    {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+                    {% if user == current_user %}
+                        <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
     <hr>
-    {% for post in posts %}
-        {% include '_post.html' %}
-    {% endfor %}
+    <p>Current maximum score for player is: <b>{{ score }}</b> with details as follows:</p>
+    {% if details %}
+    <div id="signature" class="output">
+        <table>
+            <tr>
+                <th><b>Perfect</b></th>
+                <th><b>Great</b></th>
+                <th><b>Good</b></th>
+                <th><b>Bad</b></th>
+                <th><b>Miss</b></th>
+            </tr>
+            <tr>
+                <td>{{ details.perfect }}</td>
+                <td>{{ details.great }}</td>
+                <td>{{ details.good }}</td>
+                <td>{{ details.bad }}</td>
+                <td>{{ details.miss }}</td>
+            </tr>
+        </table>
+    </div>
+    {% else %}
+    <p>You have not submitted any score. Please submit before the deadline</p>
+    {% endif %}
 {% endblock %}

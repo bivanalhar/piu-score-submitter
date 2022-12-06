@@ -10,13 +10,13 @@
     <body>
         <div>
             PIU Score Submitter: <br>
-            <a href = "{{ url_for('entrance') }}">Main</a><br>
             <a href = "{{ url_for('home') }}">Homepage</a><br>
             {% if current_user.is_anonymous %}
             <a href = "{{ url_for('login') }}">Login</a><br>
             {% else %}
             <a href = "{{ url_for('user', username = current_user.username) }}">Profile</a><br>
-            <a href = "{{ url_for('logout') }}">Logout</a><br>
+            <a href = "{{ url_for('piucomp1') }}">PIU Comp 1</a><br>
+            <a href = "{{ url_for('logout') }}">Logout</a>
             {% endif %}
         </div>
         <hr>
