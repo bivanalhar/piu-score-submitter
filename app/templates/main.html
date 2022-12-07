@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
     <h2>Welcome, {{ current_user.username }}, to PIU Score Submitter</h2><br>
     <p>Currently, here are the list of competitions you might be able to participate in:</p>
     {% for post in posts %}

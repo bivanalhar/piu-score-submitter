@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
     <style>
-        #signature table, th, td {
-            border: 1px solid blue;
+        .firstTable, .firstTable th, .firstTable td {
+            border: 1px
         }
-
-        #heading table, th, td {
-            border: 0px
+        .firstTable th, .firstTable td {
+            padding : 5px;
+            text-align: left;
         }
     </style>
-    <div id="heading" class="output">
-        <table>
+    <div>
+        <table class="firstTable">
             <tr valign="top">
-                <td><img src="{{ user.avatar(128) }}"></td>
+                <td><img src="{{ user.avatar(256) }}"></td>
                 <td>
-                    <h2>User: {{ user.username }}</h2>
+                    <h2>Username: {{ user.username }}</h2>
                     {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                     {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
                     {% if user == current_user %}
@@ -26,16 +26,42 @@
         </table>
     </div>
     <hr>
-    <p>Current maximum score for player is: <b>{{ score }}</b> with details as follows:</p>
+    <p>Current maximum score for player is given in the following details:</p>
     {% if details %}
-    <div id="signature" class="output">
-        <table>
+    <style>
+        .secondTable, .secondTable th, .secondTable td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        .secondTable th, .secondTable td {
+            padding: 10px;
+            text-align: center;
+        }
+        .secondTable th {
+            background-color: orange;
+            font-size: 17px;
+        }
+        .secondTable colgroup {
+            width: 50px
+        }
+    </style>
+    <div>
+        <table class="secondTable">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col style="width:150px">
+            </colgroup>
             <tr>
                 <th><b>Perfect</b></th>
                 <th><b>Great</b></th>
                 <th><b>Good</b></th>
                 <th><b>Bad</b></th>
                 <th><b>Miss</b></th>
+                <th><b>TOTAL SCORE</b></th>
             </tr>
             <tr>
                 <td>{{ details.perfect }}</td>
@@ -43,6 +69,7 @@
                 <td>{{ details.good }}</td>
                 <td>{{ details.bad }}</td>
                 <td>{{ details.miss }}</td>
+                <td><b>{{ score }}</b></td>
             </tr>
         </table>
     </div>
