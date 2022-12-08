@@ -29,7 +29,7 @@
                     <li><a href="{{ url_for('login') }}">Login</a></li>
                     {% else %}
                     <li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
-                    <li><a href = "{{ url_for('piucomp1') }}">PIU Comp 1</a><br></li>
+                    <li><a href = "{{ url_for('score') }}">Score Submission</a><br></li>
                     <li><a href="{{ url_for('logout') }}">Logout</a></li>
                     {% endif %}
                 </ul>

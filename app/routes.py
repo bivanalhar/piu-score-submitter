@@ -19,7 +19,8 @@ def before_request():
 @login_required
 def home():
     posts = [
-        {'comp_name' : 'Let\'s have a trial competition'}
+        {'comp_name' : 'Let\'s have a trial competition', 'id' : 1},
+        {'comp_name' : 'The real UCS will gonna torture you so badly', 'id' : 2}
     ]
     return render_template(
         "main.html", 
@@ -50,21 +51,21 @@ def login():
         return redirect(next_page)
     return render_template("login.html", title = "Sign In", form = form)
 
-@web.route('/piucomp1', methods=['GET', 'POST'])
+@web.route('/score', methods=['GET', 'POST'])
 @login_required
-def piucomp1():
+def score():
     form = SubmissionForm1(current_user.username)
     if form.validate_on_submit():
         score = Score(username = form.username.data, perfect = form.perfect.data, great = form.great.data,
-            good = form.good.data, bad = form.bad.data, miss = form.miss.data)
+            event = form.event.data, good = form.good.data, bad = form.bad.data, miss = form.miss.data)
         score.set_totalScore(form.perfect.data, form.great.data, form.good.data, 
             form.bad.data, form.miss.data)
         db.session.add(score)
         db.session.commit()
 
         flash("Congratulations, {}, for you have successfully uploaded your score".format(form.username.data))
-        return redirect(url_for('piucomp1'))
-    return render_template("piucomp1.html", title = "PIU Comp 1", form = form)
+        return redirect(url_for('user', username=current_user.username))
+    return render_template("score.html", title = "Score Submission", form = form)
 
 @web.route('/user/<username>')
 @login_required
@@ -72,13 +73,19 @@ def user(username):
     user = User.query.filter_by(username = username).first_or_404()
     scores = Score.query.filter_by(username = username).all()
 
-    max_score, cur_details = 0, None
+    all_scores = []
+
     if len(scores) > 0:
-        for s in scores:
-            if s.totalScore > max_score:
-                max_score = s.totalScore
-                cur_details = s
-    return render_template("user.html", user = user, score = max_score, details = cur_details)
+        all_events = sorted(set(s.event for s in scores))
+        for event in all_events:
+            score_events = [s for s in scores if s.event == event]
+            details = max(score_events, key = lambda p: p.finalScore)
+            all_scores.append(details)
+    
+    if len(all_scores) == 0:
+        all_scores = None
+            
+    return render_template("user.html", user = user, all_scores = all_scores)
 
 @web.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -111,6 +118,11 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template("edit_profile.html", title = "Edit Profile", form = form)
+
+@web.route('/comp/<variable>')
+@login_required
+def comp(variable):
+    return render_template("comp.html", title = "Competition Details", var = variable)
 
 @web.route('/logout')
 def logout():

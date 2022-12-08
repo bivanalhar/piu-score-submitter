@@ -1,10 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, PasswordField, SubmitField, IntegerField
+from wtforms import StringField, BooleanField, PasswordField, SubmitField, IntegerField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Email
 from wtforms.validators import EqualTo, Length
 from app.models import User
 
 from sqlalchemy import func
+
+event_choices = [
+    "#1 - Let's have a trial competition",
+    "#2 - The real UCS will gonna torture you so badly"
+]
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators = [DataRequired()])
@@ -36,6 +41,7 @@ class RegistrationForm(FlaskForm):
 
 class SubmissionForm1(FlaskForm):
     username = StringField('PIU Username', validators = [DataRequired()])
+    event = SelectField('Select the Event', choices = event_choices, validators = [DataRequired()])
     perfect = IntegerField('Perfect')
     great = IntegerField('Great')
     good = IntegerField('Good')

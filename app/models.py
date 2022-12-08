@@ -32,12 +32,13 @@ class User(UserMixin, db.Model):
 class Score(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(64))
+    event = db.Column(db.String(200))
     perfect = db.Column(db.Integer, default = 0)
     great = db.Column(db.Integer, default = 0)
     good = db.Column(db.Integer, default = 0)
     bad = db.Column(db.Integer, default = 0)
     miss = db.Column(db.Integer, default = 0)
-    totalScore = db.Column(db.Integer)
+    finalScore = db.Column(db.Float)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
@@ -45,7 +46,9 @@ class Score(db.Model):
             self.good, self.bad, self.miss)
     
     def set_totalScore(self, perfect, great, good, bad, miss):
-        self.totalScore = 2 * perfect + 1 * great + 0 * (good + bad + miss)
+        numerator = perfect + 0.8*great + 0.5*good + 0.1*miss
+        denominator = perfect + great + good + bad + miss
+        self.finalScore = round(numerator / denominator, 7)
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key = True)

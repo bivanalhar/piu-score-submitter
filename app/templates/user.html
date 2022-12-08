@@ -27,7 +27,7 @@
     </div>
     <hr>
     <p>Current maximum score for player is given in the following details:</p>
-    {% if details %}
+    {% if all_scores %}
     <style>
         .secondTable, .secondTable th, .secondTable td {
             border: 1px solid black;
@@ -48,6 +48,7 @@
     <div>
         <table class="secondTable">
             <colgroup>
+                <col style="width:300px">
                 <col>
                 <col>
                 <col>
@@ -56,21 +57,25 @@
                 <col style="width:150px">
             </colgroup>
             <tr>
+                <th><b>Event Name</b></th>
                 <th><b>Perfect</b></th>
                 <th><b>Great</b></th>
                 <th><b>Good</b></th>
                 <th><b>Bad</b></th>
                 <th><b>Miss</b></th>
-                <th><b>TOTAL SCORE</b></th>
+                <th><b>FINAL SCORE</b></th>
             </tr>
+            {% for details in all_scores %}
             <tr>
+                <td>{{ details.event }}</td>
                 <td>{{ details.perfect }}</td>
                 <td>{{ details.great }}</td>
                 <td>{{ details.good }}</td>
                 <td>{{ details.bad }}</td>
                 <td>{{ details.miss }}</td>
-                <td><b>{{ score }}</b></td>
+                <td><b>{{ details.finalScore }}</b></td>
             </tr>
+            {% endfor %}
         </table>
     </div>
     {% else %}
