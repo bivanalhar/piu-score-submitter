@@ -6,9 +6,9 @@ from app.models import User
 
 from sqlalchemy import func
 
-event_choices = [
-    "#1 - Let's have a trial competition",
-    "#2 - The real UCS will gonna torture you so badly"
+choices = [
+    ("E1", "#1 - The real UCS will gonna torture you so badly"),
+    ("E2", "#2 - Time to Drill up - UCS full of Drill is now ready")
 ]
 
 class LoginForm(FlaskForm):
@@ -41,7 +41,8 @@ class RegistrationForm(FlaskForm):
 
 class SubmissionForm1(FlaskForm):
     username = StringField('PIU Username', validators = [DataRequired()])
-    event = SelectField('Select the Event', choices = event_choices, validators = [DataRequired()])
+    event = SelectField('Select the Event', choices = choices, validators = [DataRequired()])
+    chart = SelectField('Select the Stepchart', choices = [], validators = [DataRequired()])
     perfect = IntegerField('Perfect')
     great = IntegerField('Great')
     good = IntegerField('Good')

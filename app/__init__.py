@@ -16,7 +16,7 @@ login = LoginManager(web)
 login.login_view = "login"
 
 db = SQLAlchemy(web)
-migrate = Migrate(web, db)
+migrate = Migrate(web, db, render_as_batch=True)
 
 bootstrap = Bootstrap(web)
 

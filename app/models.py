@@ -13,7 +13,6 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(200))
     last_seen = db.Column(db.DateTime, default = datetime.utcnow)
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
     scores = db.relationship('Score', backref='author', lazy='dynamic')
 
     def __repr__(self):
@@ -33,6 +32,7 @@ class Score(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(64))
     event = db.Column(db.String(200))
+    chart = db.Column(db.String(200))
     perfect = db.Column(db.Integer, default = 0)
     great = db.Column(db.Integer, default = 0)
     good = db.Column(db.Integer, default = 0)
@@ -42,22 +42,20 @@ class Score(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return '<Perfect:{} Great:{} Good:{} Bad:{} Miss:{}>'.format(self.perfect, self.great, \
-            self.good, self.bad, self.miss)
+        return '<Event:{} Chart:{} finalScore:{}>'.format(self.event, self.chart, self.finalScore)
     
     def set_totalScore(self, perfect, great, good, bad, miss):
-        numerator = perfect + 0.8*great + 0.5*good + 0.1*miss
+        numerator = perfect + 0.8*great + 0.5*good + 0.1*bad
         denominator = perfect + great + good + bad + miss
         self.finalScore = round(numerator / denominator, 7)
 
-class Post(db.Model):
+class Chart(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    body = db.Column(db.String(128))
-    timestamp = db.Column(db.DateTime, index = True, default = datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    event = db.Column(db.String(128))
+    chart = db.Column(db.String(200))
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
+        return '<Chart:{} Event:{}>'.format(self.chart, self.event)
 
 @login.user_loader
 def load_user(id):

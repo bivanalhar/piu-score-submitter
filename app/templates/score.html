@@ -8,5 +8,23 @@
         <div class="col-md-4">
             {{ wtf.quick_form(form) }}
         </div>
+        <script>
+            let chart_select = document.getElementById('chart');
+            let event_select = document.getElementById('event');
+
+            event_select.onchange = function() {
+                event = event_select.value;
+                
+                fetch('/chart/' + event).then(function(response) {
+                    response.json().then(function(data) {
+                        let optionHTML = "";
+                        for (let chart of data.charts) {
+                            optionHTML += '<option value="' + chart.id + '">' + chart.chart + '</option>';
+                        }
+                        chart_select.innerHTML = optionHTML;
+                    });
+                });
+            }
+        </script>
     </div>
 {% endblock %}

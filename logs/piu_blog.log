@@ -1,33 +1,37 @@
-2022-12-08 14:53:30,701 ERROR: Exception on /comp/2 [GET] [in /Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py:1741]
-Traceback (most recent call last):
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 2525, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 1822, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 1820, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/app.py", line 1796, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask_login/utils.py", line 290, in decorated_view
-    return current_app.ensure_sync(func)(*args, **kwargs)
-  File "/Users/bivanalhar/Documents/piu-score-submitter/app/routes.py", line 125, in comp
-    return render_template("comp.html", title = "Competition Details", var = variable)
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/flask/templating.py", line 146, in render_template
-    template = app.jinja_env.get_or_select_template(template_name_or_list)
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 1010, in get_template
-    return self._load_template(name, globals)
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 969, in _load_template
-    template = self.loader.load(self, name, self.make_globals(globals))
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/loaders.py", line 138, in load
-    code = environment.compile(source, name, filename)
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 768, in compile
-    self.handle_exception(source=source_hint)
-  File "/Users/bivanalhar/opt/anaconda3/envs/piu-score/lib/python3.9/site-packages/jinja2/environment.py", line 936, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/Users/bivanalhar/Documents/piu-score-submitter/app/templates/comp.html", line 4, in template
-    {% if var === 1 %}
-jinja2.exceptions.TemplateSyntaxError: unexpected '='
-2022-12-08 14:54:10,069 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
-2022-12-08 15:03:41,791 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-09 10:20:20,662 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-09 10:29:06,057 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-09 10:30:08,301 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-09 10:32:05,766 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-09 10:32:45,283 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 11:57:42,481 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 11:59:11,568 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 11:59:22,269 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 14:49:10,150 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 14:54:11,888 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 14:54:32,116 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 14:58:17,914 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 14:59:16,885 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 14:59:29,378 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:01:04,213 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:01:19,628 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:05:57,470 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:06:05,372 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:06:21,040 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:06:31,722 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:06:54,590 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:08:54,161 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:09:47,624 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:09:53,682 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:10:01,190 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:10:14,140 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:10:22,573 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:11:13,749 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:11:31,959 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:25:14,642 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:32:24,576 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:34:07,977 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:35:41,209 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:35:53,377 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:37:34,132 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:41:14,766 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]
+2022-12-12 15:50:54,806 INFO: PIU blog startup [in /Users/bivanalhar/Documents/piu-score-submitter/app/__init__.py:51]

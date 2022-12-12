@@ -1,9 +1,9 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 from app import web, db
-from app.models import User, Score
+from app.models import User, Score, Chart
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, SubmissionForm1
 
 from datetime import datetime
@@ -19,8 +19,7 @@ def before_request():
 @login_required
 def home():
     posts = [
-        {'comp_name' : 'Let\'s have a trial competition', 'id' : 1},
-        {'comp_name' : 'The real UCS will gonna torture you so badly', 'id' : 2}
+        {'comp_name' : 'The real UCS will gonna torture you so badly'}
     ]
     return render_template(
         "main.html", 
@@ -55,6 +54,8 @@ def login():
 @login_required
 def score():
     form = SubmissionForm1(current_user.username)
+
+    form.chart.choices = [(chart.id, chart.chart) for chart in Chart.query.filter_by(event = "E1").all()]
     if form.validate_on_submit():
         score = Score(username = form.username.data, perfect = form.perfect.data, great = form.great.data,
             event = form.event.data, good = form.good.data, bad = form.bad.data, miss = form.miss.data)
@@ -66,6 +67,20 @@ def score():
         flash("Congratulations, {}, for you have successfully uploaded your score".format(form.username.data))
         return redirect(url_for('user', username=current_user.username))
     return render_template("score.html", title = "Score Submission", form = form)
+
+@web.route('/chart/<event>')
+def chart(event):
+    charts = Chart.query.filter_by(event = event).all()
+    chartArray = []
+
+    for chart in charts:
+        chartObj = {}
+        chartObj["id"] = chart.id
+        chartObj["chart"] = chart.chart
+
+        chartArray.append(chartObj)
+    
+    return jsonify({'charts' : chartArray})
 
 @web.route('/user/<username>')
 @login_required
@@ -119,10 +134,10 @@ def edit_profile():
         form.about_me.data = current_user.about_me
     return render_template("edit_profile.html", title = "Edit Profile", form = form)
 
-@web.route('/comp/<variable>')
+@web.route('/comp')
 @login_required
-def comp(variable):
-    return render_template("comp.html", title = "Competition Details", var = variable)
+def comp():
+    return render_template("comp.html", title = "Competition Details")
 
 @web.route('/logout')
 def logout():
