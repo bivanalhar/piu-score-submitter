@@ -8,6 +8,17 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, SubmissionFo
 
 from datetime import datetime
 
+events = {
+    "E1" : "D18 Shades of Banya: Let\'s Burn our Passion"
+}
+
+charts = {
+    "1" : "Papa Gonzales",
+    "2" : "First Love",
+    "3" : "Blazing",
+    "4" : "Jam O'Beat"
+}
+
 @web.before_request
 def before_request():
     if current_user.is_authenticated:
@@ -19,12 +30,73 @@ def before_request():
 @login_required
 def home():
     posts = [
-        {'comp_name' : 'The real UCS will gonna torture you so badly'}
+        {'comp_name' : 'D18 Shades of Banya: Let\'s Burn our Passion', 'code' : "E1"}
     ]
     return render_template(
         "main.html", 
         posts = posts
     )
+
+@web.route('/chart/<event>')
+def chart(event):
+    charts = Chart.query.filter_by(event = event).all()
+    chartArray = []
+
+    for chart in charts:
+        chartObj = {}
+        chartObj["id"] = chart.id
+        chartObj["chart"] = chart.chart
+
+        chartArray.append(chartObj)
+    
+    return jsonify({'charts' : chartArray})
+
+@web.route('/comp/<event>')
+@login_required
+def comp(event):
+    usernames = [user.username for user in User.query.all()]
+    charts = sorted([chart.chart for chart in Chart.query.filter_by(event = event).all()])
+
+    listScore = []
+    for user in usernames:
+        scores = Score.query.filter_by(event = event, username = user).all()
+        print(scores)
+        if len(scores) == 0:
+            continue
+        
+        userScores = 0.0
+        for chart in charts:
+            scores_c = [score for score in scores if score.chart == chart]
+            if len(scores_c) > 0:
+                maxScore = max(scores_c, key = lambda p: p.finalScore)
+                userScores += maxScore.finalScore
+        
+        listScore.append(
+            {"username" : user, "totalScore" : round(userScores, 7)}
+        )
+    if len(listScore) == 0:
+        final = None
+    else:
+        final = sorted(listScore, key = lambda p: p["totalScore"], reverse = True)
+        for i in range(len(final)):
+            final[i]["rank"] = i + 1
+    return render_template("comp.html", title = "Competition Details", event = event, final = final)
+
+@web.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = EditProfileForm(current_user.username)
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+
+        flash("Your changes has been saved")
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    return render_template("edit_profile.html", title = "Edit Profile", form = form)
 
 @web.route('/login', methods=['GET', 'POST'])
 def login():
@@ -50,6 +122,11 @@ def login():
         return redirect(next_page)
     return render_template("login.html", title = "Sign In", form = form)
 
+@web.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
+
 @web.route('/score', methods=['GET', 'POST'])
 @login_required
 def score():
@@ -58,7 +135,8 @@ def score():
     form.chart.choices = [(chart.id, chart.chart) for chart in Chart.query.filter_by(event = "E1").all()]
     if form.validate_on_submit():
         score = Score(username = form.username.data, perfect = form.perfect.data, great = form.great.data,
-            event = form.event.data, good = form.good.data, bad = form.bad.data, miss = form.miss.data)
+            event = form.event.data, good = form.good.data, bad = form.bad.data, miss = form.miss.data,
+            chart = charts[form.chart.data])
         score.set_totalScore(form.perfect.data, form.great.data, form.good.data, 
             form.bad.data, form.miss.data)
         db.session.add(score)
@@ -67,40 +145,6 @@ def score():
         flash("Congratulations, {}, for you have successfully uploaded your score".format(form.username.data))
         return redirect(url_for('user', username=current_user.username))
     return render_template("score.html", title = "Score Submission", form = form)
-
-@web.route('/chart/<event>')
-def chart(event):
-    charts = Chart.query.filter_by(event = event).all()
-    chartArray = []
-
-    for chart in charts:
-        chartObj = {}
-        chartObj["id"] = chart.id
-        chartObj["chart"] = chart.chart
-
-        chartArray.append(chartObj)
-    
-    return jsonify({'charts' : chartArray})
-
-@web.route('/user/<username>')
-@login_required
-def user(username):
-    user = User.query.filter_by(username = username).first_or_404()
-    scores = Score.query.filter_by(username = username).all()
-
-    all_scores = []
-
-    if len(scores) > 0:
-        all_events = sorted(set(s.event for s in scores))
-        for event in all_events:
-            score_events = [s for s in scores if s.event == event]
-            details = max(score_events, key = lambda p: p.finalScore)
-            all_scores.append(details)
-    
-    if len(all_scores) == 0:
-        all_scores = None
-            
-    return render_template("user.html", user = user, all_scores = all_scores)
 
 @web.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -118,28 +162,25 @@ def signup():
         return redirect(url_for('login'))
     return render_template("signup.html", title = "Sign Up", form = form)
 
-@web.route('/edit_profile', methods=['GET', 'POST'])
+@web.route('/user/<username>')
 @login_required
-def edit_profile():
-    form = EditProfileForm(current_user.username)
-    if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.about_me = form.about_me.data
-        db.session.commit()
+def user(username):
+    user = User.query.filter_by(username = username).first_or_404()
+    scores = Score.query.filter_by(username = username).all()
 
-        flash("Your changes has been saved")
-        return redirect(url_for('edit_profile'))
-    elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.about_me.data = current_user.about_me
-    return render_template("edit_profile.html", title = "Edit Profile", form = form)
+    all_scores = []
 
-@web.route('/comp')
-@login_required
-def comp():
-    return render_template("comp.html", title = "Competition Details")
-
-@web.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for("home"))
+    if len(scores) > 0:
+        all_charts = sorted(set(s.chart for s in scores))
+        all_events = sorted(set(s.event for s in scores))
+        for event in all_events:
+            for chart in all_charts:
+                score_events = [s for s in scores if s.event == event and s.chart == chart]
+                details = max(score_events, key = lambda p: p.finalScore)
+                details.event_name = events[details.event]
+                all_scores.append(details)
+    
+    if len(all_scores) == 0:
+        all_scores = None
+            
+    return render_template("user.html", user = user, all_scores = all_scores)

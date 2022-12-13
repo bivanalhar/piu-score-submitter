@@ -48,16 +48,18 @@
     <div>
         <table class="secondTable">
             <colgroup>
-                <col style="width:300px">
-                <col>
-                <col>
-                <col>
-                <col>
-                <col>
+                <col style="width:200px">
                 <col style="width:150px">
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col style="width:120px">
             </colgroup>
             <tr>
                 <th><b>Event Name</b></th>
+                <th><b>Chart Name</b></th>
                 <th><b>Perfect</b></th>
                 <th><b>Great</b></th>
                 <th><b>Good</b></th>
@@ -67,7 +69,8 @@
             </tr>
             {% for details in all_scores %}
             <tr>
-                <td>{{ details.event }}</td>
+                <td>{{ details.event_name }}</td>
+                <td>{{ details.chart }}</td>
                 <td>{{ details.perfect }}</td>
                 <td>{{ details.great }}</td>
                 <td>{{ details.good }}</td>

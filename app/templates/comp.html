@@ -1,33 +1,84 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h2>The real UCS will gonna torture you so badly</h2><br>
-    <p>In this competition, each of the players will be given two UCS which needs to be played. The stepcharts are to 
-        be revealed to the players one day before the competition officially starts (which will be on 12th December).
-        Even so, we might provide more details regarding the UCS you might need to encounter, as follows:
-        <ul>
-            <li>One of the UCS will be Single and another one will be Double</li>
-            <li>The single one will be as difficult as S17 and the double one will be as difficult as D15</li> 
-        </ul>
+    <h1>D18 Shades of Banya: Let's Burn our Passion</h1>
+    <h2>Submission Time: 18th December 2022 - 24th December 2022</h2>
+    <p>In this competition, each player will be provided 4 UCS for 4 different songs, made by our master. Each player participating
+        in this competition must attend all of those 4 charts provided within the submission time. Those UCS are as follows:
+        <ol type="1">
+            <li><a href="https://www.piugame.com/bbs/board.php?bo_table=ucs&wr_id=31355&sfl=wr_name%2C1&stx=ROND&sop=and">Papa Gonzales</a></li>
+            <li><a href="https://www.piugame.com/bbs/board.php?bo_table=ucs&wr_id=31362&sfl=wr_name%2C1&stx=ROND&sop=and">First Love</a></li>
+            <li><a href="https://www.piugame.com/bbs/board.php?bo_table=ucs&wr_id=31371&sfl=wr_name%2C1&stx=ROND&sop=and">Blazing</a></li>
+            <li><a href="https://www.piugame.com/bbs/board.php?bo_table=ucs&wr_id=31372&sfl=wr_name%2C1&stx=ROND&sop=and">Jam O'Beat</a></li>
+        </ol>
+        Please note that before attempting, you must firstly register those songs into your AM.Pass Card so that you might be able
+        to play the charts properly. The step-by-step guide for registering those UCS into your card is as follows:
+        <ol type="1">
+            <li>Login through the <a href="https://www.piugame.com/piu.ucs/ucs.main.php"></a>PIU UCS website</a> 
+                with your credentials that's usually used to login to <a href="https://www.piugame.com/piu.xx/">usual 
+                PIU Website</a></li>
+            <li>Navigate through the tab named UCS Sharing, and search for the StepMaker ROND</li>
+            <li>There, you will see all 4 UCS that were mentioned on top of this post. Please click on the blue button called
+                <b>SLOT</b> for each of the UCS</li>
+            <li>Then, navigate through the tab named <b>My Activity</b>, and below the table UCS Slot, click <b>Register Game</b></li>
+            <li>The UCS Registration is complete in your card, and you might play those charts in any arcade that has PIU Machine</li>
+        </ol>
         The rulings of the current competition will be as follows:
         <ul>
-            <li>The duration for the score submission will be from 13th December to 27th December</li>
-            <li>Scoring system will be different from the total score available on the screen. We will calculate the final
-                score by calculating the following formula:<br> 
-                <b>(perfect + 0.8*great + 0.5*good + 0.1*bad) / (perfect + great + good + bad + miss)</b>
-            </li>
-            <li>Both scores will be summed and the sum will be used to determine the rank of each player</li>
-            <li> Players are allowed to attempt each of the UCS as many as possible within the time period, however 
-                only the one with the highest score for each UCS will be calculated towards the final 
-            </li>
+            <li>We will utilise the different scoring system than those provided by Andamiro. The formulation of the final
+                score will be following formula:<br> 
+                <b>(perfect + 0.8*great + 0.5*good + 0.1*bad) / (perfect + great + good + bad + miss)</b></li>
+            <li>All scores will be accummulated and the rank will be determined solely by that total score</li>
+            <li>Players are allowed to attempt each of the UCS as many as possible within the time period, however 
+                only the one with the highest score for each UCS will be calculated towards the final score</li>
             <li>Currently, there is no requirement to upload the photo of your scores. However, please fill in the form 
-                provided <a href="{{ url_for('score') }}">here</a> honestly. 
-            </li>
-            <li>
-                You need to send the photo of your best achievement (for each UCS, <b>based on the score system applied 
-                within this competition</b>) in the WhatsApp group that we have
-            </li>
+                provided <a href="{{ url_for('score') }}">here</a> honestly. </li>
         </ul>
         Lastly, enjoy the competition, and may the odds be ever in your favor.
+    </p>
+
+    <p>The current standing of the competition is as follows:
+        {% if final %}
+        <style>
+            .secondTable, .secondTable th, .secondTable td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            .secondTable th, .secondTable td {
+                padding: 10px;
+                text-align: center;
+            }
+            .secondTable th {
+                background-color: greenyellow;
+                font-size: 17px;
+            }
+            .secondTable colgroup {
+                width: 50px
+            }
+        </style>
+        <div>
+            <table class="secondTable">
+                <colgroup>
+                    <col style="width:50px">
+                    <col style="width:200px">
+                    <col style="width:150px">
+                </colgroup>
+                <tr>
+                    <th><b>Rank</b></th>
+                    <th><b>Username</b></th>
+                    <th><b>FINAL SCORE</b></th>
+                </tr>
+                {% for details in final %}
+                <tr>
+                    <td>{{ details.rank }}</td>
+                    <td>{{ details.username }}</td>
+                    <td><b>{{ details.totalScore }}</b></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>No existing user has attempted any UCS thus far</p>
+        {% endif %}
     </p>
 {% endblock %}
