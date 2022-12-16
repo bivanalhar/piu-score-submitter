@@ -133,7 +133,7 @@ def score():
 
     form.chart.choices = [(chart.id, chart.chart) for chart in Chart.query.filter_by(event = "E1").all()]
     if form.validate_on_submit():
-        score = Score(username = form.username.data, perfect = form.perfect.data, great = form.great.data,
+        score = Score(username = current_user.username, perfect = form.perfect.data, great = form.great.data,
             event = form.event.data, good = form.good.data, bad = form.bad.data, miss = form.miss.data,
             chart = charts[form.chart.data])
         score.set_totalScore(form.perfect.data, form.great.data, form.good.data, 
@@ -143,7 +143,7 @@ def score():
 
         flash("Congratulations, {}, for you have successfully uploaded your score".format(form.username.data))
         return redirect(url_for('user', username=current_user.username))
-    return render_template("score.html", title = "Score Submission", form = form)
+    return render_template("score.html", title = "Score Submission", form = form, username = current_user.username)
 
 @web.route('/signup', methods=['GET', 'POST'])
 def signup():
