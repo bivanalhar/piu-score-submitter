@@ -11,7 +11,7 @@ from datetime import datetime
 import git
 
 events = {
-    "E1" : "D18 Shades of Banya: Let\'s Burn our Passion"
+    "E1" : "18 Again"
 }
 
 charts = {
@@ -32,7 +32,7 @@ def before_request():
 @login_required
 def home():
     posts = [
-        {'comp_name' : 'D18 Shades of Banya: Let\'s Burn our Passion', 'code' : "E1"}
+        {'comp_name' : '18 Again', 'code' : "E1"}
     ]
     return render_template(
         "main.html", 
