@@ -47,7 +47,7 @@ class Score(db.Model):
     def set_totalScore(self, perfect, great, good, bad, miss):
         numerator = perfect + 0.8*great + 0.5*good + 0.1*bad
         denominator = perfect + great + good + bad + miss
-        self.finalScore = round(numerator / denominator, 7)
+        self.finalScore = int(numerator * 10000000 / denominator) / 100000
 
 class Chart(db.Model):
     id = db.Column(db.Integer, primary_key = True)

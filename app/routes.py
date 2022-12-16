@@ -60,7 +60,6 @@ def comp(event):
     listScore = []
     for user in usernames:
         scores = Score.query.filter_by(event = event, username = user).all()
-        print(scores)
         if len(scores) == 0:
             continue
         
@@ -72,7 +71,7 @@ def comp(event):
                 userScores += maxScore.finalScore
         
         listScore.append(
-            {"username" : user, "totalScore" : round(userScores, 7)}
+            {"username" : user, "totalScore" : userScores}
         )
     if len(listScore) == 0:
         final = None
