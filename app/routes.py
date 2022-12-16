@@ -133,8 +133,8 @@ def score():
 
     form.chart.choices = [(chart.id, chart.chart) for chart in Chart.query.filter_by(event = "E1").all()]
     if form.validate_on_submit():
-        score = Score(username = form.username.data, perfect = form.perfect.data, great = form.great.data,
-            event = current_user.username, good = form.good.data, bad = form.bad.data, miss = form.miss.data,
+        score = Score(username = current_user.username, perfect = form.perfect.data, great = form.great.data,
+            event = form.event.data, good = form.good.data, bad = form.bad.data, miss = form.miss.data,
             chart = charts[form.chart.data])
         score.set_totalScore(form.perfect.data, form.great.data, form.good.data, 
             form.bad.data, form.miss.data)
