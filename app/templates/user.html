@@ -69,7 +69,7 @@
             </tr>
             {% for details in top_scores %}
             <tr>
-                <td>{{ details.event_name }}</td>
+                <td>{{ events_map[details.event] }}</td>
                 <td>{{ details.chart }}</td>
                 <td>{{ details.perfect }}</td>
                 <td>{{ details.great }}</td>
@@ -130,7 +130,7 @@
             </tr>
             {% for details in scores %}
             <tr>
-                <td>{{ details.event_name }}</td>
+                <td>{{ events_map[details.event] }}</td>
                 <td>{{ details.chart }}</td>
                 <td>{{ details.perfect }}</td>
                 <td>{{ details.great }}</td>

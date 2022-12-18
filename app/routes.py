@@ -35,7 +35,7 @@ def home():
         {'comp_name' : '18 Again', 'code' : "E1"}
     ]
     return render_template(
-        "main.html", 
+        "main.html",
         posts = posts
     )
 
@@ -50,7 +50,7 @@ def chart(event):
         chartObj["chart"] = chart.chart
 
         chartArray.append(chartObj)
-    
+
     return jsonify({'charts' : chartArray})
 
 @web.route('/comp/<event>')
@@ -64,14 +64,14 @@ def comp(event):
         scores = Score.query.filter_by(event = event, username = user).all()
         if len(scores) == 0:
             continue
-        
+
         userScores = 0.0
         for chart in charts:
             scores_c = [score for score in scores if score.chart == chart]
             if len(scores_c) > 0:
                 maxScore = max(scores_c, key = lambda p: p.finalScore)
                 userScores += maxScore.finalScore
-        
+
         listScore.append(
             {"username" : user, "totalScore" : userScores}
         )
@@ -110,11 +110,11 @@ def login():
         if user is None:
             flash("Invalid username")
             return redirect(url_for("login"))
-        
+
         if not user.check_password(form.password.data):
             flash("this username has mismatch password")
             return redirect(url_for("login"))
-        
+
         login_user(user, remember = form.remember_me.data)
 
         next_page = request.args.get('next')
@@ -138,12 +138,12 @@ def score():
         score = Score(username = current_user.username, perfect = form.perfect.data, great = form.great.data,
             event = form.event.data, good = form.good.data, bad = form.bad.data, miss = form.miss.data,
             chart = charts[form.chart.data])
-        score.set_totalScore(form.perfect.data, form.great.data, form.good.data, 
+        score.set_totalScore(form.perfect.data, form.great.data, form.good.data,
             form.bad.data, form.miss.data)
         db.session.add(score)
         db.session.commit()
 
-        flash("Congratulations, {}, for you have successfully uploaded your score".format(form.username.data))
+        flash("Congratulations, {}, for you have successfully uploaded your score".format(current_user.username))
         return redirect(url_for('user', username=current_user.username))
     return render_template("score.html", title = "Score Submission", form = form, username = current_user.username)
 
@@ -178,13 +178,12 @@ def user(username):
             for chart in all_charts:
                 score_events = [s for s in scores if s.event == event and s.chart == chart]
                 details = max(score_events, key = lambda p: p.finalScore)
-                details.event_name = events[details.event]
                 top_scores.append(details)
-    
+
     if len(top_scores) == 0:
         top_scores = None
-            
-    return render_template("user.html", user = user, top_scores = top_scores, scores = scores)
+
+    return render_template("user.html", user = user, top_scores = top_scores, scores = scores, events_map = events)
 
 @web.route('/update_server', methods=['POST'])
 def webhook():
