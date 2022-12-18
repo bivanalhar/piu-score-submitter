@@ -27,7 +27,7 @@
     </div>
     <hr>
     <p>Current maximum score for player is given in the following details:</p>
-    {% if all_scores %}
+    {% if top_scores %}
     <style>
         .secondTable, .secondTable th, .secondTable td {
             border: 1px solid black;
@@ -67,7 +67,7 @@
                 <th><b>Miss</b></th>
                 <th><b>FINAL SCORE</b></th>
             </tr>
-            {% for details in all_scores %}
+            {% for details in top_scores %}
             <tr>
                 <td>{{ details.event_name }}</td>
                 <td>{{ details.chart }}</td>
@@ -83,5 +83,67 @@
     </div>
     {% else %}
     <p>You have not submitted any score. Please submit before the deadline</p>
+    {% endif %}
+    <hr>
+    <p>All your submitted scores are found below:</p>
+    {% if scores %}
+    <style>
+        .secondTable, .secondTable th, .secondTable td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        .secondTable th, .secondTable td {
+            padding: 10px;
+            text-align: center;
+        }
+        .secondTable th {
+            background-color: orange;
+            font-size: 17px;
+        }
+        .secondTable colgroup {
+            width: 50px
+        }
+    </style>
+    <div>
+        <table class="secondTable">
+            <colgroup>
+                <col style="width:200px">
+                <col style="width:150px">
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col style="width:120px">
+                <col>
+            </colgroup>
+            <tr>
+                <th><b>Event Name</b></th>
+                <th><b>Chart Name</b></th>
+                <th><b>Perfect</b></th>
+                <th><b>Great</b></th>
+                <th><b>Good</b></th>
+                <th><b>Bad</b></th>
+                <th><b>Miss</b></th>
+                <th><b>FINAL SCORE</b></th>
+                <th><b>Action</b></th>
+            </tr>
+            {% for details in scores %}
+            <tr>
+                <td>{{ details.event_name }}</td>
+                <td>{{ details.chart }}</td>
+                <td>{{ details.perfect }}</td>
+                <td>{{ details.great }}</td>
+                <td>{{ details.good }}</td>
+                <td>{{ details.bad }}</td>
+                <td>{{ details.miss }}</td>
+                <td><b>{{ details.finalScore }}</b></td>
+                <td><a href="{{ url_for('delete_score', scoreid = details.id) }}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+    <p>No records found.</p>
     {% endif %}
 {% endblock %}

@@ -169,7 +169,7 @@ def user(username):
     user = User.query.filter_by(username = username).first_or_404()
     scores = Score.query.filter_by(username = username).all()
 
-    all_scores = []
+    top_scores = []
 
     if len(scores) > 0:
         all_charts = sorted(set(s.chart for s in scores))
@@ -179,12 +179,12 @@ def user(username):
                 score_events = [s for s in scores if s.event == event and s.chart == chart]
                 details = max(score_events, key = lambda p: p.finalScore)
                 details.event_name = events[details.event]
-                all_scores.append(details)
+                top_scores.append(details)
     
-    if len(all_scores) == 0:
-        all_scores = None
+    if len(top_scores) == 0:
+        top_scores = None
             
-    return render_template("user.html", user = user, all_scores = all_scores)
+    return render_template("user.html", user = user, top_scores = top_scores, scores = scores)
 
 @web.route('/update_server', methods=['POST'])
 def webhook():
@@ -195,3 +195,13 @@ def webhook():
         return 'Updated PythonAnywhere successfully', 200
     else:
         return 'Wrong event type', 400
+
+@web.route('/delete_score/<scoreid>')
+@login_required
+def delete_score(scoreid):
+    score = Score.query.filter_by(id = scoreid).first_or_404()
+    db.session.delete(score)
+    db.session.commit()
+
+    flash("Score with ID {} has been deleted.".format(scoreid))
+    return redirect(url_for('user', username=current_user.username))
