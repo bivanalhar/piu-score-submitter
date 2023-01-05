@@ -16,9 +16,12 @@ events = {
 
 charts = {
     "1" : "Papa Gonzales",
-    "2" : "First Love",
-    "3" : "Blazing",
-    "4" : "Jam O'Beat"
+    "2" : "Yeo Rae A",
+    "3" : "Mad5cience",
+    "4" : "First Love",
+    "5" : "Blazing",
+    "6" : "Jam O'Beat",
+    "7" : "Allocated Song"
 }
 
 @web.before_request
