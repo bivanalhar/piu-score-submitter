@@ -20,10 +20,10 @@ class User(UserMixin, db.Model):
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
-    
+
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
+
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
@@ -39,11 +39,12 @@ class Score(db.Model):
     bad = db.Column(db.Integer, default = 0)
     miss = db.Column(db.Integer, default = 0)
     finalScore = db.Column(db.Float)
+    setNumber = db.Column(db.Integer, default = 1)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return '<Event:{} Chart:{} finalScore:{}>'.format(self.event, self.chart, self.finalScore)
-    
+        return '<ID:{} Username:{} Event:{} Chart:{} finalScore:{} setNumber:{}>'.format(self.id, self.username, self.event, self.chart, self.finalScore, self.setNumber)
+
     def set_totalScore(self, perfect, great, good, bad, miss):
         numerator = perfect + 0.8*great + 0.5*good + 0.1*bad
         denominator = perfect + great + good + bad + miss

@@ -27,12 +27,12 @@ class RegistrationForm(FlaskForm):
         #only allow username with all lowercase letters
         if username.data != username.data.lower():
             raise ValidationError("username should contain only lowercase letters")
-        
+
         #username that has been stored in database cannot be reused
         user = User.query.filter_by(username = username.data).first()
         if user is not None:
             raise ValidationError("please select a different username")
-    
+
     def validate_email(self, email):
         user = User.query.filter_by(email = email.data).first()
         if user is not None:
@@ -46,16 +46,17 @@ class SubmissionForm1(FlaskForm):
     good = IntegerField('Good')
     bad = IntegerField('Bad')
     miss = IntegerField('Miss')
+    set_number = IntegerField('Set Number')
     submit = SubmitField("Submit")
 
     def __init__(self, original_username, *args, **kwargs):
         super(SubmissionForm1, self).__init__(*args, **kwargs)
         self.original_username = original_username
-    
+
     def validate_perfect(self, perfect):
         if perfect.data < 0:
             raise ValidationError("the inputted number should be at least 0")
-    
+
     def validate_great(self, great):
         if great.data < 0:
             raise ValidationError("the inputted number should be at least 0")
@@ -80,7 +81,7 @@ class EditProfileForm(FlaskForm):
     def __init__(self, original_username, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.original_username = original_username
-    
+
     def validate_username(self, username):
         #at the moment, we should not accommodate changing the username
         if username.data != self.original_username:

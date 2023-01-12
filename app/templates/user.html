@@ -46,6 +46,7 @@
         }
     </style>
     <div>
+        <p><b>Total Set Score: </b>{{max_set_score}}</p>
         <table class="secondTable">
             <colgroup>
                 <col style="width:200px">
@@ -65,6 +66,7 @@
                 <th><b>Good</b></th>
                 <th><b>Bad</b></th>
                 <th><b>Miss</b></th>
+                <th><b>Set Number</b></th>
                 <th><b>FINAL SCORE</b></th>
             </tr>
             {% for details in top_scores %}
@@ -76,6 +78,7 @@
                 <td>{{ details.good }}</td>
                 <td>{{ details.bad }}</td>
                 <td>{{ details.miss }}</td>
+                <td>{{ details.setNumber }}</td>
                 <td><b>{{ details.finalScore }}</b></td>
             </tr>
             {% endfor %}
@@ -125,6 +128,7 @@
                 <th><b>Good</b></th>
                 <th><b>Bad</b></th>
                 <th><b>Miss</b></th>
+                <th><b>Set Number</b></th>
                 <th><b>FINAL SCORE</b></th>
                 <th><b>Action</b></th>
             </tr>
@@ -137,6 +141,7 @@
                 <td>{{ details.good }}</td>
                 <td>{{ details.bad }}</td>
                 <td>{{ details.miss }}</td>
+                <td>{{ details.setNumber }}</td>
                 <td><b>{{ details.finalScore }}</b></td>
                 <td><a href="{{ url_for('delete_score', scoreid = details.id) }}">Delete</a></td>
             </tr>

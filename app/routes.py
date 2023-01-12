@@ -65,18 +65,26 @@ def comp(event):
     listScore = []
     for user in usernames:
         scores = Score.query.filter_by(event = event, username = user).all()
+
         if len(scores) == 0:
             continue
 
-        userScores = 0.0
-        for chart in charts:
-            scores_c = [score for score in scores if score.chart == chart]
-            if len(scores_c) > 0:
-                maxScore = max(scores_c, key = lambda p: p.finalScore)
-                userScores += maxScore.finalScore
+        distinct_set_number = set()
+        for score in scores:
+            distinct_set_number.add(score.setNumber)
+
+        max_total_set_score = 0
+        for set_number in distinct_set_number:
+            submissions_in_set = [s for s in scores if s.setNumber == set_number]
+            total_set_score = 0
+            for submission in submissions_in_set:
+                total_set_score += submission.finalScore
+
+            if total_set_score > max_total_set_score:
+                max_total_set_score = total_set_score
 
         listScore.append(
-            {"username" : user, "totalScore" : userScores}
+            {"username" : user, "totalScore" : max_total_set_score}
         )
     if len(listScore) == 0:
         final = None
@@ -140,7 +148,7 @@ def score():
     if form.validate_on_submit():
         score = Score(username = current_user.username, perfect = form.perfect.data, great = form.great.data,
             event = form.event.data, good = form.good.data, bad = form.bad.data, miss = form.miss.data,
-            chart = charts[form.chart.data])
+            chart = charts[form.chart.data], setNumber = form.set_number.data)
         score.set_totalScore(form.perfect.data, form.great.data, form.good.data,
             form.bad.data, form.miss.data)
         db.session.add(score)
@@ -173,20 +181,33 @@ def user(username):
     scores = Score.query.filter_by(username = username).all()
 
     top_scores = []
+    max_total_set_score = 0
 
     if len(scores) > 0:
-        all_charts = sorted(set(s.chart for s in scores))
-        all_events = sorted(set(s.event for s in scores))
-        for event in all_events:
-            for chart in all_charts:
-                score_events = [s for s in scores if s.event == event and s.chart == chart]
-                details = max(score_events, key = lambda p: p.finalScore)
-                top_scores.append(details)
+        distinct_set_number = set()
+        for score in scores:
+            distinct_set_number.add(score.setNumber)
+
+        set_to_submission_dict = {}
+        max_set_number = 0
+
+        for set_number in distinct_set_number:
+            submissions_in_set = [s for s in scores if s.setNumber == set_number]
+            set_to_submission_dict[set_number] = submissions_in_set
+            total_set_score = 0
+            for submission in submissions_in_set:
+                total_set_score += submission.finalScore
+
+            if total_set_score > max_total_set_score:
+                max_total_set_score = total_set_score
+                max_set_number = set_number
+
+        top_scores.extend(set_to_submission_dict[max_set_number])
 
     if len(top_scores) == 0:
         top_scores = None
 
-    return render_template("user.html", user = user, top_scores = top_scores, scores = scores, events_map = events)
+    return render_template("user.html", user = user, top_scores = top_scores, max_set_score = max_total_set_score, scores = scores, events_map = events)
 
 @web.route('/update_server', methods=['POST'])
 def webhook():
