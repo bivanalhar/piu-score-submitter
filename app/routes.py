@@ -76,8 +76,18 @@ def comp(event):
         max_total_set_score = 0
         for set_number in distinct_set_number:
             submissions_in_set = [s for s in scores if s.setNumber == set_number]
+
+            top_songs_in_set = []
+            all_charts = sorted(set(s.chart for s in submissions_in_set))
+            all_events = sorted(set(s.event for s in submissions_in_set))
+            for event in all_events:
+                for chart in all_charts:
+                    score_events = [s for s in submissions_in_set if s.event == event and s.chart == chart]
+                    details = max(score_events, key = lambda p: p.finalScore)
+                    top_songs_in_set.append(details)
+
             total_set_score = 0
-            for submission in submissions_in_set:
+            for submission in top_songs_in_set:
                 total_set_score += submission.finalScore
 
             if total_set_score > max_total_set_score:
@@ -193,9 +203,19 @@ def user(username):
 
         for set_number in distinct_set_number:
             submissions_in_set = [s for s in scores if s.setNumber == set_number]
-            set_to_submission_dict[set_number] = submissions_in_set
+
+            top_songs_in_set = []
+            all_charts = sorted(set(s.chart for s in submissions_in_set))
+            all_events = sorted(set(s.event for s in submissions_in_set))
+            for event in all_events:
+                for chart in all_charts:
+                    score_events = [s for s in submissions_in_set if s.event == event and s.chart == chart]
+                    details = max(score_events, key = lambda p: p.finalScore)
+                    top_songs_in_set.append(details)
+
+            set_to_submission_dict[set_number] = top_songs_in_set
             total_set_score = 0
-            for submission in submissions_in_set:
+            for submission in top_songs_in_set:
                 total_set_score += submission.finalScore
 
             if total_set_score > max_total_set_score:
