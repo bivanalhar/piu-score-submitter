@@ -11,8 +11,10 @@ from datetime import datetime
 import git
 
 events = {
-    "E1" : "18 Again"
+    "E1" : "18 Again",
+    "E2" : "Oriental Sounds?"
 }
+current_event = "E2"
 
 charts = {
     "1" : "Papa Gonzales",
@@ -21,7 +23,16 @@ charts = {
     "4" : "First Love",
     "5" : "Blazing",
     "6" : "Jam O'Beat",
-    "7" : "Allocated Song"
+    "7" : "Allocated Song",
+
+    "8"  : "Ai, Yurete... D8",
+    "9"  : "Chinese Restaurant S10",
+    "10" : "BSPower Explosion S11",
+    "11" : "Tantanmen S14",
+    "12" : "X-tree D15",
+    "13" : "Rolling Christmas D16",
+    "14" : "Christmas Memories S14",
+    "15" : "Utsushiyo no Kaze D18"
 }
 
 @web.before_request
@@ -35,7 +46,8 @@ def before_request():
 @login_required
 def home():
     posts = [
-        {'comp_name' : '18 Again', 'code' : "E1"}
+        {'comp_name' : '18 Again', 'code' : "E1", 'is_done': True},
+        {'comp_name' : 'Oriental Sounds?', 'code' : "E2", 'is_done': False}
     ]
     return render_template(
         "main.html",
@@ -102,7 +114,7 @@ def comp(event):
         final = sorted(listScore, key = lambda p: p["totalScore"], reverse = True)
         for i in range(len(final)):
             final[i]["rank"] = i + 1
-    return render_template("comp.html", title = "Competition Details", event = event, final = final)
+    return render_template("comp" + event + ".html", title = "Competition Details", event = event, final = final)
 
 @web.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -154,7 +166,7 @@ def logout():
 def score():
     form = SubmissionForm1(current_user.username)
 
-    form.chart.choices = [(chart.id, chart.chart) for chart in Chart.query.filter_by(event = "E1").all()]
+    form.chart.choices = [(chart.id, chart.chart) for chart in Chart.query.filter_by(event = current_event).all()]
     if form.validate_on_submit():
         score = Score(username = current_user.username, perfect = form.perfect.data, great = form.great.data,
             event = form.event.data, good = form.good.data, bad = form.bad.data, miss = form.miss.data,
@@ -188,7 +200,7 @@ def signup():
 @login_required
 def user(username):
     user = User.query.filter_by(username = username).first_or_404()
-    scores = Score.query.filter_by(username = username).all()
+    scores = Score.query.filter_by(username = username, event = current_event).all()
 
     top_scores = []
     max_total_set_score = 0

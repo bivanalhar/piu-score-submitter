@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>Oriental Sounds?</h1>
+
+    <h2>Basic Information</h2>
+    <strong>Mini-Challenge #7</strong>: Oriental Sounds? (Lunar New Year Special Event)<br/>
+	<strong>Timeline</strong>: 2023.01.16 ~ 2023.02.12<br/>
+	<p>
+	    <strong>Description: </strong>When Lunar New Year comes too early and the X-mas Spirit is still around,
+	    we can hear a mixture of X-mas music and LNY music being played all around us.
+	    Enjoy this set, specially crafted to celebrate a mixture of X-mas sound and Oriental sound.
+	</p>
+	<strong>Scoring System</strong>: EX-Score<br/>
+	<div class="alert alert-info" role="alert">
+		EX-Score = <b>(perfect + 0.8*great + 0.5*good + 0.1*bad) / (perfect + great + good + bad + miss)</b>
+	</div>
+
+	<h2>Featured Songs</h2>
+	<ol type="1">
+        <li><a href="https://www.youtube.com/watch?v=0QDGlur-Ymc">Ai, Yurete... D8</a> <span class="badge badge-danger">Oriental</span></li>
+        <li><a href="https://www.youtube.com/watch?v=yyN23QibRRg">Chinese Restaurant S10</a> <span class="badge badge-danger">Oriental</span></li>
+        <li><a href="https://www.youtube.com/watch?v=PwSoPISGFFA">BSPower Explosion S11</a> <span class="badge badge-danger">Oriental</span></li>
+        <li><a href="https://www.youtube.com/watch?v=1v6w2ut36rU">Tantanmen S14</a> <span class="badge badge-danger">Oriental</span></li>
+        <li><a href="https://www.youtube.com/watch?v=_4_FnF96eP0">X-tree D15</a> <span class="badge badge-success">X-mas</span></li>
+        <li><a href="https://www.youtube.com/watch?v=9F5XsySObI4">Rolling Christmas D16</a> <span class="badge badge-success">X-mas</span></li>
+    </ol>
+    <p><strong>Low Boss: </strong><a href="https://www.youtube.com/watch?v=gwczy7Y3POs">Christmas Memories S14</a> <span class="badge badge-success">X-mas</span></p>
+    <p><strong>High Boss: </strong><a href="https://www.youtube.com/watch?v=yXI1zyug43s">Utsushiyo no Kaze D18</a> <span class="badge badge-danger">Oriental</span></p>
+    <p><strong>Threshold: </strong>11</p>
+
+
+	<h2>Mechanics</h2>
+	<ol type="1">
+	    <li>Choose 3 songs out of the 6 songs in the list. Recommended to choose charts that suit your skill level!</li>
+	    <li>
+	        Add up the three song numbers, e.g. if you choose Ai Yurete D8, X-tree D15 and Rolling Christmas D16,
+	        your total will be 1 + 5 + 6 = 12
+	    </li>
+	    <li>
+	        Play the high boss if your total is equal to or more than the threshold. Play the low boss otherwise!
+	    </li>
+	</ol>
+
+	<h2>Objectives</h2>
+	Attain the highest value of <b>(sum of player's 4 songs)</b>
+
+    <h2>Other Information</h2>
+    <p>
+        Additional information for the mini-challenge are as follows:
+        <ul>
+            <li>Players are allowed to attempt each chart as many times as possible within the time period, and
+                only the set of 4 songs with the highest total score will be used in the final calculation.</li>
+            <li>Currently, there is no requirement to upload the photo of your scores. However, please fill in the form
+                provided <a href="{{ url_for('score') }}">here</a> honestly.</li>
+        </ul>
+        Enjoy the competition, and may the odds be ever in your favor.
+    </p>
+
+    <h2>Leaderboards</h2>
+    <p>The current standing of the competition is as follows:
+        {% if final %}
+        <style>
+            .secondTable, .secondTable th, .secondTable td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            .secondTable th, .secondTable td {
+                padding: 10px;
+                text-align: center;
+            }
+            .secondTable th {
+                background-color: greenyellow;
+                font-size: 17px;
+            }
+            .secondTable colgroup {
+                width: 50px
+            }
+        </style>
+        <div>
+            <table class="secondTable">
+                <colgroup>
+                    <col style="width:50px">
+                    <col style="width:200px">
+                    <col style="width:150px">
+                </colgroup>
+                <tr>
+                    <th><b>Rank</b></th>
+                    <th><b>Username</b></th>
+                    <th><b>FINAL SCORE</b></th>
+                </tr>
+                {% for details in final %}
+                <tr>
+                    <td>{{ details.rank }}</td>
+                    <td>{{ details.username }}</td>
+                    <td><b>{{ details.totalScore }}</b></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>No existing user has attempted the event thus far</p>
+        {% endif %}
+    </p>
+{% endblock %}

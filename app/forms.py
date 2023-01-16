@@ -7,7 +7,7 @@ from app.models import User
 from sqlalchemy import func
 
 choices = [
-    ("E1", "18 Again")
+    ("E2", "Oriental Sounds")
 ]
 
 class LoginForm(FlaskForm):

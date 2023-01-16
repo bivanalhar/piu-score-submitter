@@ -5,7 +5,12 @@
     <p>Currently, here are the list of competitions you might be able to participate in:</p>
     {% for post in posts %}
     <div>
-        <p><a href="{{ url_for('comp', event=post.code) }}">{{ post.comp_name }}</a></p>
+        <p>
+            {% if post.is_done %}
+                <span class="badge badge-primary">DONE</span>
+            {% endif %}
+            <a href="{{ url_for('comp', event=post.code) }}">{{ post.comp_name }}</a>
+        </p>
     </div>
     {% endfor %}
 {% endblock %}
