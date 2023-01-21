@@ -200,21 +200,22 @@ def signup():
 @login_required
 def user(username):
     user = User.query.filter_by(username = username).first_or_404()
-    scores = Score.query.filter_by(username = username, event = current_event).all()
+    all_scores = Score.query.filter_by(username = username).all()
+    event_scores = Score.query.filter_by(username = username, event = current_event).all()
 
     top_scores = []
     max_total_set_score = 0
 
-    if len(scores) > 0:
+    if len(event_scores) > 0:
         distinct_set_number = set()
-        for score in scores:
+        for score in event_scores:
             distinct_set_number.add(score.setNumber)
 
         set_to_submission_dict = {}
         max_set_number = 0
 
         for set_number in distinct_set_number:
-            submissions_in_set = [s for s in scores if s.setNumber == set_number]
+            submissions_in_set = [s for s in event_scores if s.setNumber == set_number]
 
             top_songs_in_set = []
             all_charts = sorted(set(s.chart for s in submissions_in_set))
@@ -239,7 +240,7 @@ def user(username):
     if len(top_scores) == 0:
         top_scores = None
 
-    return render_template("user.html", user = user, top_scores = top_scores, max_set_score = max_total_set_score, scores = scores, events_map = events)
+    return render_template("user.html", user = user, top_scores = top_scores, max_set_score = max_total_set_score, scores = all_scores, events_map = events)
 
 @web.route('/update_server', methods=['POST'])
 def webhook():
