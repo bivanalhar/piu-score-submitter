@@ -6,8 +6,10 @@
     {% for post in posts %}
     <div>
         <p>
-            {% if post.is_done %}
-                <span class="badge badge-primary">DONE</span>
+            {% if post.status == 0 %}
+                <span class="label label-default">DONE</span>
+            {% elif post.status == 2 %}
+                <span class="label label-info">Coming Soon</span>
             {% endif %}
             <a href="{{ url_for('comp', event=post.code) }}">{{ post.comp_name }}</a>
         </p>

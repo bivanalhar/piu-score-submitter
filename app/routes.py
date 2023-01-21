@@ -46,8 +46,9 @@ def before_request():
 @login_required
 def home():
     posts = [
-        {'comp_name' : '18 Again', 'code' : "E1", 'is_done': True},
-        {'comp_name' : 'Oriental Sounds?', 'code' : "E2", 'is_done': False}
+        {'comp_name' : '18 Again', 'code' : "E1", 'status': 0},
+        {'comp_name' : 'Oriental Sounds?', 'code' : "E2", 'status': 1},
+        {'comp_name' : 'Mini-Tourney 2', 'code' : "MT2", 'status': 2}
     ]
     return render_template(
         "main.html",

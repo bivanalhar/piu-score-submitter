@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>Mini-Tourney #2: Black or White</h1>
+
+    <h2>Basic Information</h2>
+    <strong>Theme</strong>: Black or White<br/>
+	<strong>Event Date</strong>: TBC<br/>
+
+	<h2>Description</h2>
+	<p>
+	    One way of classifying any rhythm games stepchart is by classifying it into "black" chart or "white" chart.
+	</p>
+	<p>
+	    "Black" chart, also known as specialist chart, requires less effort to clear for some people and a lot more
+	    effort to clear for some other people. These charts require very specific skills that are usually not found
+	    normally in many other charts. In PIU context, footswitches, jacks, gimmicks or brackets can cause a chart
+	    to be classified as "black" chart.
+	</p>
+	<p>
+	    "White" chart, on the other hand, is a very straightforward chart that would usually require skills that
+	    are commonly found in many other charts. The charts do not play tricks on the players and it should be very
+	    easy to sightread "white" charts. In PIU context, a heavy run/stamina or twisty chart would usually be
+	    classified as "white" chart.
+	</p>
+	<p>
+	    Players usually do not debate so much about how easy or difficult a "white" chart is, but there will be
+	    heated discussions on how easy or difficult a "black" chart is. Read more about "black" vs "white" chart
+	    in <a href="https://piucoderage.blogspot.com/2023/01/chartalyzer-3-native-s20.html">my blog here</a>.
+	</p>
+
+	<h2>Scoring System</h2>
+	<p>We will use EX-Score system in this mini-tourney. The calculation is done as follows:</p>
+	<div class="alert alert-info" role="alert">
+		EX-Score = <b>(perfect + 0.8*great + 0.5*good + 0.1*bad) / (perfect + great + good + bad + miss)</b>
+	</div>
+
+	<h2>Tourney Mechanics</h2>
+	<h3>Round 1</h3>
+	<p>Round 1 is a singles round. Players will be paired up randomly and will compete against each other.</p>
+	<p>In each pair,</p>
+	<ul>
+        <li>Players will do rock-paper-scissors</li>
+        <li>One player can decide between Black or White</li>
+        <li>The other player can decide between Low or High</li>
+        <li>A song will be randomised from the list of handpicked charts</li>
+    </ul>
+    <p>Player with higher score wins and proceeds to the next round</p>
+
+    <h3>Round 2</h3>
+	<p>Round 2 is a doubles round. Winners from Round 1 will be paired up randomly and will compete against each other.</p>
+	<p>In each pair,</p>
+	<ul>
+        <li>Players will do rock-paper-scissors</li>
+        <li>One player can decide between Black or White</li>
+        <li>The other player can decide between Low or High</li>
+        <li>A song will be randomised from the list of handpicked charts</li>
+    </ul>
+    <p>Player with higher score wins and proceeds to the final round</p>
+
+    <h3>Final Round</h3>
+    <p>Round 3 is a UCS round. Winners from Round 2 (can be more than 2) will play both a Black UCS and a White UCS that has been prepared beforehand.</p>
+	<ul>
+	    <li>The winners will do rock-paper-scissors (or any other random games) to decide the order of play.</li>
+	    <li>The first player will have to sightread the chart, but allowed to choose between Black or White.</li>
+	    <li>After all players play one UCS, the order will be reversed for the other UCS.</li>
+    </ul>
+    <p>Player with highest total score of Black UCS + White UCS wins</p>
+
+
+	<h2>Song List</h2>
+	<p>Players are welcomed to practice the charts in the list to prepare for the tourney</p>
+
+	<h3>Singles Round</h3>
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item disabled"><strong>BLACK</strong></li>
+                <li class="list-group-item list-group-item-success">
+                    <p><strong>Low</strong></p>
+                    <ul>
+                        <li>Yeo Rae A S13</li>
+                        <li>Monkey Fingers S15</li>
+                        <li>Bad Apple S15</li>
+                        <li>Exceed2 Opening S15 <span class="label label-success">Shortcut</span></li>
+                        <li>Emperor S16</li>
+                        <li>Break It Down S16</li>
+                    </ul>
+                </li>
+                <li class="list-group-item list-group-item-danger">
+                    <p><strong>High</strong></p>
+                    <ul>
+                        <li>Love Scenario S17</li>
+                        <li>Ugly Dee S17</li>
+                        <li>Set Up Me2 S17 <span class="label label-warning">Remix</span></li>
+                        <li>Final Audition S18</li>
+                        <li>Guitar Man S20</li>
+                        <li>Final Audition Ep 2-X S20 <span class="label label-success">Shortcut</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item"><strong>WHITE</strong></li>
+                <li class="list-group-item list-group-item-success">
+                    <p><strong>Low</strong></p>
+                    <ul>
+                        <li>Toccata S10</li>
+                        <li>Hyponsis (Synthwulf Mix) S11</li>
+                        <li>Destination S12</li>
+                        <li>We Will Meet Again S13</li>
+                        <li>Sugar Conspiracy Theory S14</li>
+                        <li>WI-EX-DOC-VA S15 <span class="label label-warning">Remix</span></li>
+                    </ul>
+                </li>
+                <li class="list-group-item list-group-item-danger">
+                    <p><strong>High</strong></p>
+                    <ul>
+                        <li>Tek Club Copenhagen S16</li>
+                        <li>Turkey March Minimal Tunes S17</li>
+                        <li>Reality S17</li>
+                        <li>What Are You Doin? S18 <span class="label label-warning">Remix</span></li>
+                        <li>Papa Helloizing S19 <span class="label label-warning">Remix</span></li>
+                        <li>Love is a Danger Zone S19 <span class="label label-info">Full Song</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+	<h3>Doubles Round</h3>
+	<div class="row">
+        <div class="col-sm-6 col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item disabled"><strong>BLACK</strong></li>
+                <li class="list-group-item list-group-item-success">
+                    <p><strong>Low</strong></p>
+                    <ul>
+                        <li>Trotpris D14</li>
+                        <li>Free Style D15</li>
+                        <li>Tribe Attacker D17</li>
+                        <li>Jump D18</li>
+                    </ul>
+                </li>
+                <li class="list-group-item list-group-item-danger">
+                    <p><strong>High</strong></p>
+                    <ul>
+                        <li>Another Truth D18</li>
+                        <li>Dance With Me D18</li>
+                        <li>Pop Sequence D19</li>
+                        <li>Rock the House D22</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item"><strong>WHITE</strong></li>
+                <li class="list-group-item list-group-item-success">
+                    <p><strong>Low</strong></p>
+                    <ul>
+                        <li>Papasito D14 <span class="label label-info">Full Song</span></li>
+                        <li>Tream Vook of the War D15 <span class="label label-warning">Remix</span></li>
+                        <li>Csikos Post D16</li>
+                        <li>Stardust Overdrive D17 <span class="label label-success">Shortcut</span></li>
+                    </ul>
+                </li>
+                <li class="list-group-item list-group-item-danger">
+                    <p><strong>High</strong></p>
+                    <ul>
+                        <li>Pumping Jumping D17</li>
+                        <li>Interference D18 <span class="label label-info">Full Song</span></li>
+                        <li>Papa Gonzales D18</li>
+                        <li>Hann D19 <span class="label label-info">Full Song</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
