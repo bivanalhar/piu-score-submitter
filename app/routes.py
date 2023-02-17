@@ -8,7 +8,7 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, SubmissionFo
 
 from datetime import datetime
 
-import git
+import git, random, re
 
 events = {
     "E1" : "18 Again",
@@ -242,6 +242,43 @@ def user(username):
         top_scores = None
 
     return render_template("user.html", user = user, top_scores = top_scores, max_set_score = max_total_set_score, scores = all_scores, events_map = events)
+
+@web.route('/pairer', methods=['GET', 'POST'])
+def pairer():
+    # TODO: get user_input
+    comma_separated_pattern = re.compile("^([a-zA-Z0-9]+,?\s*)+$")
+    if re.match(comma_separated_pattern, user_input) is None:
+        flash("Please check the input format")
+        return redirect(url_for('pairer'))
+
+    splitted = user_input.split(",")
+    indexes = []
+    for i in range(len(splitted)):
+        indexes.append(i+1)
+    random.shuffle(indexes)
+
+    idx_to_name_map = {}
+    for idx in range(len(indexes)):
+        ele = indexes[idx]
+        idx_to_name_map[ele] = splitted[idx]
+
+    return render_template("")
+
+@web.route('/randomiser', methods=['GET', 'POST'])
+def randomiser():
+    # TODO: get user_input
+    comma_separated_pattern = re.compile("^([a-zA-Z0-9]+,?\s*)+$")
+    if re.match(comma_separated_pattern, user_input) is None:
+        flash("Please check the input format")
+        return redirect(url_for('pairer'))
+
+    splitted = user_input.split(",")
+    random_num = random.randint(0, len(splitted)-1)
+    output = splitted[random_num]
+
+    return render_template("")
+
+
 
 @web.route('/update_server', methods=['POST'])
 def webhook():
