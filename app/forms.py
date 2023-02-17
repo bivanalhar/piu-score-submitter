@@ -6,6 +6,8 @@ from app.models import User
 
 from sqlalchemy import func
 
+import re
+
 choices = [
     ("E2", "Oriental Sounds")
 ]
@@ -86,3 +88,13 @@ class EditProfileForm(FlaskForm):
         #at the moment, we should not accommodate changing the username
         if username.data != self.original_username:
             raise ValidationError("please input the username used during login")
+
+class CommaSeparatedUserInputForm(FlaskForm):
+    user_input = StringField('List of comma-separated string')
+    submit = SubmitField("Submit")
+
+    def validate_user_input(self, user_input):
+        # only allow comma-separated alphanumeric string
+        comma_separated_pattern = re.compile("^([a-zA-Z0-9]+,?\s*)+(?<!,)$")
+        if re.match(comma_separated_pattern, user_input.data) is None:
+            raise ValidationError("input should only be comma-separated alphanumeric string without trailing comma")

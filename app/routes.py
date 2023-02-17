@@ -4,11 +4,11 @@ from werkzeug.urls import url_parse
 
 from app import web, db
 from app.models import User, Score, Chart
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, SubmissionForm1
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, SubmissionForm1, CommaSeparatedUserInputForm
 
 from datetime import datetime
 
-import git, random, re
+import git, random
 
 events = {
     "E1" : "18 Again",
@@ -245,40 +245,30 @@ def user(username):
 
 @web.route('/pairer', methods=['GET', 'POST'])
 def pairer():
-    # TODO: get user_input
-    comma_separated_pattern = re.compile("^([a-zA-Z0-9]+,?\s*)+$")
-    if re.match(comma_separated_pattern, user_input) is None:
-        flash("Please check the input format")
-        return redirect(url_for('pairer'))
+    form = CommaSeparatedUserInputForm()
+    if form.validate_on_submit():
+        splitted = form.user_input.data.split(",")
+        indexes = []
+        for i in range(len(splitted)):
+            indexes.append(i)
+        random.shuffle(indexes)
 
-    splitted = user_input.split(",")
-    indexes = []
-    for i in range(len(splitted)):
-        indexes.append(i+1)
-    random.shuffle(indexes)
-
-    idx_to_name_map = {}
-    for idx in range(len(indexes)):
-        ele = indexes[idx]
-        idx_to_name_map[ele] = splitted[idx]
-
-    return render_template("")
+        idx_to_name_map = {}
+        for idx in range(len(indexes)):
+            ele = indexes[idx]
+            idx_to_name_map[ele] = splitted[idx]
+        return render_template("pairer.html", form = form, number_of_items = len(indexes), idx_to_name_map = idx_to_name_map)
+    return render_template("pairer.html", form = form)
 
 @web.route('/randomiser', methods=['GET', 'POST'])
 def randomiser():
-    # TODO: get user_input
-    comma_separated_pattern = re.compile("^([a-zA-Z0-9]+,?\s*)+$")
-    if re.match(comma_separated_pattern, user_input) is None:
-        flash("Please check the input format")
-        return redirect(url_for('pairer'))
-
-    splitted = user_input.split(",")
-    random_num = random.randint(0, len(splitted)-1)
-    output = splitted[random_num]
-
-    return render_template("")
-
-
+    form = CommaSeparatedUserInputForm()
+    if form.validate_on_submit():
+        splitted = form.user_input.data.split(",")
+        random_num = random.randint(0, len(splitted)-1)
+        output = splitted[random_num]
+        return render_template("randomiser.html", form = form, output = output)
+    return render_template("randomiser.html", form = form)
 
 @web.route('/update_server', methods=['POST'])
 def webhook():
