@@ -8,9 +8,7 @@ from sqlalchemy import func
 
 import re
 
-choices = [
-    ("E2", "Oriental Sounds")
-]
+choices = [] # no score submission for mini-tourney
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators = [DataRequired()])

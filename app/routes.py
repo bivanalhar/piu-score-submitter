@@ -14,7 +14,7 @@ events = {
     "E1" : "18 Again",
     "E2" : "Oriental Sounds?"
 }
-current_event = "E2"
+current_event = "MT2"
 
 charts = {
     "1" : "Papa Gonzales",
@@ -47,8 +47,8 @@ def before_request():
 def home():
     posts = [
         {'comp_name' : '18 Again', 'code' : "E1", 'status': 0},
-        {'comp_name' : 'Oriental Sounds?', 'code' : "E2", 'status': 1},
-        {'comp_name' : 'Mini-Tourney 2', 'code' : "MT2", 'status': 2}
+        {'comp_name' : 'Oriental Sounds?', 'code' : "E2", 'status': 0},
+        {'comp_name' : 'Mini-Tourney 2', 'code' : "MT2", 'status': 1}
     ]
     return render_template(
         "main.html",
