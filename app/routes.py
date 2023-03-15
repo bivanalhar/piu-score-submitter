@@ -5,7 +5,8 @@ from werkzeug.urls import url_parse
 from app import web, db
 from app.config import charts, current_event, events
 from app.models import User, Score, Chart
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, SubmissionForm1, CommaSeparatedUserInputForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, SubmissionForm1, CommaSeparatedUserInputForm, IpptCalculatorForm
+from app.ippt_calculator import calculate_ippt_score
 
 from datetime import datetime
 
@@ -246,6 +247,14 @@ def randomiser():
         output = splitted[random_num]
         return render_template("randomiser.html", form = form, output = output)
     return render_template("randomiser.html", form = form)
+
+@web.route('/ippt_calc', methods=['GET', 'POST'])
+def ippt_calc():
+    form = IpptCalculatorForm()
+    if form.validate_on_submit():
+        score = calculate_ippt_score(form.ex_score.data, int(form.category.data), int(form.station.data))
+        return render_template("ippt_calculator.html", form = form, score = score)
+    return render_template("ippt_calculator.html", form = form)
 
 @web.route('/update_server', methods=['POST'])
 def webhook():

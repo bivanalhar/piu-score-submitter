@@ -1,10 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, PasswordField, SubmitField, IntegerField, SelectField
+from wtforms import StringField, BooleanField, PasswordField, SubmitField, IntegerField, SelectField, FloatField
 from wtforms.validators import ValidationError, DataRequired, Email
 from wtforms.validators import EqualTo, Length
 
 from app.models import User
 from app.config import current_event, events
+from app.ippt_calculator import categories, stations
 
 from sqlalchemy import func
 
@@ -101,3 +102,13 @@ class CommaSeparatedUserInputForm(FlaskForm):
         comma_separated_pattern = re.compile("^([a-zA-Z0-9]+,?\s*)+(?<!,)$")
         if re.match(comma_separated_pattern, user_input.data) is None:
             raise ValidationError("input should only be comma-separated alphanumeric string without trailing comma")
+
+class IpptCalculatorForm(FlaskForm):
+    stats = [(key, stations[key]) for key in stations]
+    cats = [(key, categories[key]) for key in categories]
+
+    ex_score = FloatField('EX-Score, as shown in your Profile Page', validators=[DataRequired()])
+    station = SelectField('Select Station', choices=stats, validators=[DataRequired()])
+    category = SelectField('Select Category', choices=cats, validators=[DataRequired()])
+    submit = SubmitField("Calculate")
+

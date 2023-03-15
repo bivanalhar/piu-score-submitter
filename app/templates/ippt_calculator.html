@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-md-6">
+            <h2>IPPT Calculator</h2>
+            <p>To calculate the points you have earned in Mini-Challenge 8</p>
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+    <br/><br/>
+
+    <div class="row">
+        <div class="col-md-6">
+                <p>
+                    <b>Score:</b> {{ score }}
+                </p>
+        </div>
+    </div>
+{% endblock %}
