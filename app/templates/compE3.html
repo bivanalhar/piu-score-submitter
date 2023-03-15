@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>Individual PIU Proficiency Test (IPPT)</h1>
+
+    <h2>Basic Information</h2>
+    <strong>Mini-Challenge #8</strong>: IPPT<br/>
+	<strong>Timeline</strong>: 2023.03.13 ~ 2023.03.31<br/>
+	<p>
+	    <strong>Description: </strong>Inspired by a physical proficiency test compulsory for all male
+	    Singaporean, I have crafted a special 3 station set to measure your PIU capability!
+	</p>
+	<strong>Scoring System</strong>: EX-Score<br/>
+	<div class="alert alert-info" role="alert">
+		EX-Score = <b>(perfect + 0.8*great + 0.5*good + 0.1*bad) / (perfect + great + good + bad + miss)</b>
+	</div>
+
+	<h2>Featured Songs</h2>
+	<ol type="1">
+        <li><a href="https://www.youtube.com/watch?v=uzMAi0HZx3w">Follow Me D9 on Random Step (RS)</a> <span class="label label-danger">Flexibility</span></li>
+        <li><a href="https://www.youtube.com/watch?v=kCZ4F50Ye0s">Tales of Pumpnia S19</a> <span class="label label-warning">Agility</span></li>
+        <li><a href="https://www.youtube.com/watch?v=tJAv-m80EZk">Baroque Virus Full Song S21</a> <span class="label label-success">Stamina</span></li>
+    </ol>
+
+	<h2>Mechanics</h2>
+	<ol type="1">
+	    <li>Attempt all 3 stations as one set</li>
+	    <li>Calculate your EX-Score by submitting your score on the PIU Score Submitter</li>
+	    <li>Use the IPPT Calculator to map it to IPPT points</li>
+	</ol>
+
+	<h2>Objectives</h2>
+	The minimum points to achieve the different tiers are:
+    <ul>
+        <li><b>Pass</b>: 51 pts</li>
+	    <li><b>Pass With Incentive</b>: 61 pts</li>
+	    <li><b>Silver</b>: 75 pts</li>
+        <li><b>Gold</b>: 85 pts</li>
+	</ul>
+
+    <h2>Other Information</h2>
+    <p>
+        Additional information for the mini-challenge are as follows:
+        <ul>
+            <li>Players are allowed to attempt each chart as many times as possible within the time period, and
+                only the set of 3 songs with the highest total score will be used in the final calculation.</li>
+            <li>Currently, there is no requirement to upload the photo of your scores. However, please fill in the form
+                provided <a href="{{ url_for('score') }}">here</a> honestly.</li>
+        </ul>
+        Enjoy the competition, and may the odds be ever in your favor.
+    </p>
+
+    <h2>Leaderboards</h2>
+    <p>The current standing of the competition is as follows:
+        {% if final %}
+        <style>
+            .secondTable, .secondTable th, .secondTable td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            .secondTable th, .secondTable td {
+                padding: 10px;
+                text-align: center;
+            }
+            .secondTable th {
+                background-color: greenyellow;
+                font-size: 17px;
+            }
+            .secondTable colgroup {
+                width: 50px
+            }
+        </style>
+        <div>
+            <table class="secondTable">
+                <colgroup>
+                    <col style="width:50px">
+                    <col style="width:200px">
+                    <col style="width:150px">
+                </colgroup>
+                <tr>
+                    <th><b>Rank</b></th>
+                    <th><b>Username</b></th>
+                    <th><b>FINAL SCORE</b></th>
+                </tr>
+                {% for details in final %}
+                <tr>
+                    <td>{{ details.rank }}</td>
+                    <td>{{ details.username }}</td>
+                    <td><b>{{ details.totalScore }}</b></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>No existing user has attempted the event thus far</p>
+        {% endif %}
+    </p>
+{% endblock %}

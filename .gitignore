@@ -2,3 +2,5 @@ __pycache__/
 app/__pycache__/
 logs/
 app.db
+score_submitter/
+.idea/

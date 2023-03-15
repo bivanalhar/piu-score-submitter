@@ -3,37 +3,13 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 from app import web, db
+from app.config import charts, current_event, events
 from app.models import User, Score, Chart
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, SubmissionForm1, CommaSeparatedUserInputForm
 
 from datetime import datetime
 
 import git, random
-
-events = {
-    "E1" : "18 Again",
-    "E2" : "Oriental Sounds?"
-}
-current_event = "MT2"
-
-charts = {
-    "1" : "Papa Gonzales",
-    "2" : "Yeo Rae A",
-    "3" : "Mad5cience",
-    "4" : "First Love",
-    "5" : "Blazing",
-    "6" : "Jam O'Beat",
-    "7" : "Allocated Song",
-
-    "8"  : "Ai, Yurete... D8",
-    "9"  : "Chinese Restaurant S10",
-    "10" : "BSPower Explosion S11",
-    "11" : "Tantanmen S14",
-    "12" : "X-tree D15",
-    "13" : "Rolling Christmas D16",
-    "14" : "Christmas Memories S14",
-    "15" : "Utsushiyo no Kaze D18"
-}
 
 @web.before_request
 def before_request():
@@ -48,7 +24,8 @@ def home():
     posts = [
         {'comp_name' : '18 Again', 'code' : "E1", 'status': 0},
         {'comp_name' : 'Oriental Sounds?', 'code' : "E2", 'status': 0},
-        {'comp_name' : 'Mini-Tourney 2', 'code' : "MT2", 'status': 1}
+        {'comp_name' : 'Mini-Tourney 2', 'code' : "MT2", 'status': 0},
+        {'comp_name': 'IPPT', 'code': "E3", 'status': 1}
     ]
     return render_template(
         "main.html",

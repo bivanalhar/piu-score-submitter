@@ -56,7 +56,7 @@ class Chart(db.Model):
     chart = db.Column(db.String(200))
 
     def __repr__(self):
-        return '<Chart:{} Event:{}>'.format(self.chart, self.event)
+        return '<ID:{} Chart:{} Event:{}>'.format(self.id, self.chart, self.event)
 
 @login.user_loader
 def load_user(id):

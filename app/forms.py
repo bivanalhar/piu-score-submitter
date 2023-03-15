@@ -2,13 +2,18 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, PasswordField, SubmitField, IntegerField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Email
 from wtforms.validators import EqualTo, Length
+
 from app.models import User
+from app.config import current_event, events
 
 from sqlalchemy import func
 
 import re
 
-choices = [] # no score submission for mini-tourney
+# Get the list of event directly from the current_event config in routes.py
+choices = [
+    (current_event, events[current_event])
+]
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators = [DataRequired()])
