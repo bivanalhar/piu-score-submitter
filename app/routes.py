@@ -76,7 +76,7 @@ def comp(event):
                     details = max(score_events, key = lambda p: p.finalScore)
                     # Populate IPPT score for the specified event
                     title_enum = getattr(user, "title", 0)
-                    if event == "E3" and title_enum != 0:
+                    if event == "E3" and title_enum is not None and title_enum != 0:
                         stn_enum = 2 if chart == "Baroque Virus Full Song S21" else 1  # ref: config.py
                         details.ippt_points = calculate_ippt_score(details.finalScore, title_enum, stn_enum)
                     top_songs_in_set.append(details)
@@ -214,7 +214,7 @@ def user(username):
                     details = max(score_events, key = lambda p: p.finalScore)
                     # Populate IPPT score for the specified event
                     title_enum = getattr(user, "title", 0)
-                    if event == "E3" and title_enum != 0:
+                    if event == "E3" and title_enum is not None and title_enum != 0:
                         stn_enum = 2 if chart == "Baroque Virus Full Song S21" else 1 # ref: config.py
                         details.ippt_points = calculate_ippt_score(details.finalScore, title_enum, stn_enum)
                     top_songs_in_set.append(details)
