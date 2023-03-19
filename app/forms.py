@@ -80,8 +80,12 @@ class SubmissionForm1(FlaskForm):
             raise ValidationError("the inputted number should be at least 0")
 
 class EditProfileForm(FlaskForm):
+    cats = [(key, categories[key]) for key in categories]
+    cats.insert(0, (0, "Not Specified")) # for backward compatibility, old profile might not have title
+
     username = StringField('Username', validators = [DataRequired()])
     about_me = StringField('About Me', validators = [Length(min = 0, max = 200)])
+    title = SelectField('Title', choices=cats, validators=[DataRequired()])
     submit = SubmitField("Submit")
 
     def __init__(self, original_username, *args, **kwargs):

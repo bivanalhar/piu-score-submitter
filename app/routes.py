@@ -6,7 +6,7 @@ from app import web, db
 from app.config import charts, current_event, events
 from app.models import User, Score, Chart
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, SubmissionForm1, CommaSeparatedUserInputForm, IpptCalculatorForm
-from app.ippt_calculator import calculate_ippt_score
+from app.ippt_calculator import calculate_ippt_score, categories
 
 from datetime import datetime
 
@@ -102,11 +102,13 @@ def edit_profile():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
+        current_user.title = form.title.data
         db.session.commit()
 
         flash("Your changes has been saved")
         return redirect(url_for('edit_profile'))
     elif request.method == 'GET':
+        form = EditProfileForm(current_user.username, title=getattr(current_user, "title", 0))
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template("edit_profile.html", title = "Edit Profile", form = form)
@@ -179,6 +181,7 @@ def signup():
 @login_required
 def user(username):
     user = User.query.filter_by(username = username).first_or_404()
+    title = categories[user.title] if user.title else None
     all_scores = Score.query.filter_by(username = username).all()
     event_scores = Score.query.filter_by(username = username, event = current_event).all()
 
@@ -219,7 +222,7 @@ def user(username):
     if len(top_scores) == 0:
         top_scores = None
 
-    return render_template("user.html", user = user, top_scores = top_scores, max_set_score = max_total_set_score, scores = all_scores, events_map = events)
+    return render_template("user.html", user = user, top_scores = top_scores, max_set_score = max_total_set_score, scores = all_scores, events_map = events, title = title)
 
 @web.route('/pairer', methods=['GET', 'POST'])
 def pairer():
