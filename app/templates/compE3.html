@@ -51,6 +51,9 @@
     </p>
 
     <h2>Leaderboards</h2>
+    <div class="alert alert-warning" role="alert">
+		If your score exceeds 100, please fill up your most updated title <a href="{{ url_for('edit_profile') }}">here</a>
+	</div>
     <p>The current standing of the competition is as follows:
         {% if final %}
         <style>

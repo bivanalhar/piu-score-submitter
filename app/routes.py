@@ -50,12 +50,11 @@ def chart(event):
 @web.route('/comp/<event>')
 @login_required
 def comp(event):
-    usernames = [user.username for user in User.query.all()]
-    charts = sorted([chart.chart for chart in Chart.query.filter_by(event = event).all()])
+    users = [user for user in User.query.all()]
 
     listScore = []
-    for user in usernames:
-        scores = Score.query.filter_by(event = event, username = user).all()
+    for user in users:
+        scores = Score.query.filter_by(event = event, username = user.username).all()
 
         if len(scores) == 0:
             continue
@@ -75,17 +74,24 @@ def comp(event):
                 for chart in all_charts:
                     score_events = [s for s in submissions_in_set if s.event == event and s.chart == chart]
                     details = max(score_events, key = lambda p: p.finalScore)
+                    # Populate IPPT score for the specified event
+                    title_enum = getattr(user, "title", 0)
+                    if event == "E3" and title_enum != 0:
+                        stn_enum = 2 if chart == "Baroque Virus Full Song S21" else 1  # ref: config.py
+                        details.ippt_points = calculate_ippt_score(details.finalScore, title_enum, stn_enum)
                     top_songs_in_set.append(details)
 
             total_set_score = 0
             for submission in top_songs_in_set:
-                total_set_score += submission.finalScore
+                # IPPT score has a greater priority than EX-Score
+                # Only populated for IPPT event, so normal event will not have this field
+                total_set_score += submission.finalScore if getattr(submission, "ippt_points", 0) == 0 else submission.ippt_points
 
             if total_set_score > max_total_set_score:
                 max_total_set_score = total_set_score
 
         listScore.append(
-            {"username" : user, "totalScore" : max_total_set_score}
+            {"username" : user.username, "totalScore" : max_total_set_score}
         )
     if len(listScore) == 0:
         final = None
@@ -206,12 +212,19 @@ def user(username):
                 for chart in all_charts:
                     score_events = [s for s in submissions_in_set if s.event == event and s.chart == chart]
                     details = max(score_events, key = lambda p: p.finalScore)
+                    # Populate IPPT score for the specified event
+                    title_enum = getattr(user, "title", 0)
+                    if event == "E3" and title_enum != 0:
+                        stn_enum = 2 if chart == "Baroque Virus Full Song S21" else 1 # ref: config.py
+                        details.ippt_points = calculate_ippt_score(details.finalScore, title_enum, stn_enum)
                     top_songs_in_set.append(details)
 
             set_to_submission_dict[set_number] = top_songs_in_set
             total_set_score = 0
             for submission in top_songs_in_set:
-                total_set_score += submission.finalScore
+                # IPPT score has a greater priority than EX-Score
+                # Only populated for IPPT event, so normal event will not have this field
+                total_set_score += submission.finalScore if getattr(submission, "ippt_points", 0) == 0 else submission.ippt_points
 
             if total_set_score > max_total_set_score:
                 max_total_set_score = total_set_score
