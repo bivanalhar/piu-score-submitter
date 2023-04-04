@@ -85,7 +85,10 @@ def comp(event):
             for submission in top_songs_in_set:
                 # IPPT score has a greater priority than EX-Score
                 # Only populated for IPPT event, so normal event will not have this field
-                total_set_score += submission.finalScore if getattr(submission, "ippt_points", 0) == 0 else submission.ippt_points
+                try:
+                    total_set_score += submission.ippt_points
+                except:
+                    total_set_score += submission.finalScore
 
             if total_set_score > max_total_set_score:
                 max_total_set_score = total_set_score
@@ -224,7 +227,10 @@ def user(username):
             for submission in top_songs_in_set:
                 # IPPT score has a greater priority than EX-Score
                 # Only populated for IPPT event, so normal event will not have this field
-                total_set_score += submission.finalScore if getattr(submission, "ippt_points", 0) == 0 else submission.ippt_points
+                try:
+                    total_set_score += submission.ippt_points
+                except:
+                    total_set_score += submission.finalScore
 
             if total_set_score > max_total_set_score:
                 max_total_set_score = total_set_score
@@ -235,7 +241,7 @@ def user(username):
     if len(top_scores) == 0:
         top_scores = None
 
-    return render_template("user.html", user = user, top_scores = top_scores, max_set_score = max_total_set_score, scores = all_scores, events_map = events, title = title)
+    return render_template("user.html", title = "Profile", user = user, top_scores = top_scores, max_set_score = max_total_set_score, scores = all_scores, events_map = events, piu_title = title)
 
 @web.route('/pairer', methods=['GET', 'POST'])
 def pairer():
@@ -252,7 +258,7 @@ def pairer():
             ele = indexes[idx]
             idx_to_name_map[ele] = splitted[idx]
         return render_template("pairer.html", form = form, number_of_items = len(indexes), idx_to_name_map = idx_to_name_map)
-    return render_template("pairer.html", form = form)
+    return render_template("pairer.html", title = "Pairer", form = form)
 
 @web.route('/randomiser', methods=['GET', 'POST'])
 def randomiser():
@@ -262,7 +268,7 @@ def randomiser():
         random_num = random.randint(0, len(splitted)-1)
         output = splitted[random_num]
         return render_template("randomiser.html", form = form, output = output)
-    return render_template("randomiser.html", form = form)
+    return render_template("randomiser.html", title = "Randomiser", form = form)
 
 @web.route('/ippt_calc', methods=['GET', 'POST'])
 def ippt_calc():
@@ -270,7 +276,7 @@ def ippt_calc():
     if form.validate_on_submit():
         score = calculate_ippt_score(form.ex_score.data, int(form.category.data), int(form.station.data))
         return render_template("ippt_calculator.html", form = form, score = score)
-    return render_template("ippt_calculator.html", form = form)
+    return render_template("ippt_calculator.html", title = "IPPT Calculator", form = form)
 
 @web.route('/update_server', methods=['POST'])
 def webhook():

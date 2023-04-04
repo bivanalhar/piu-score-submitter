@@ -18,7 +18,7 @@
                     <h2>Username: {{ user.username }}</h2>
                     {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                     {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
-                    {% if title %}<p>Title: {{ title }}</p>{% endif %}
+                    {% if piu_title %}<p>Title: {{ piu_title }}</p>{% endif %}
                     {% if user == current_user %}
                         <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
                     {% endif %}
@@ -80,7 +80,7 @@
                 <td>{{ details.bad }}</td>
                 <td>{{ details.miss }}</td>
                 <td>{{ details.setNumber }}</td>
-                <td><b>{{ details.ippt_points if details.ippt_points else details.finalScore }}</b></td>
+                <td><b>{{ details.ippt_points if details.ippt_points is not none else details.finalScore }}</b></td>
             </tr>
             {% endfor %}
         </table>
