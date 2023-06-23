@@ -2,10 +2,11 @@
 events = {
     "E1" : "18 Again",
     "E2" : "Oriental Sounds?",
-    "E3" : "IPPT"
+    "E3" : "IPPT",
+    "E4" : "Mini Challenge #9"
 }
 
-current_event = "E3"
+current_event = "E4"
 
 charts = {
     "1" : "Papa Gonzales",
@@ -27,5 +28,9 @@ charts = {
 
     "16": "Follow Me D9 RS",
     "17": "Tales of Pumpnia S19",
-    "18": "Baroque Virus Full Song S21"
+    "18": "Baroque Virus Full Song S21",
+
+    "19": "Final Audition Ep 1 S20",
+    "20": "Chicken Wing S20",
+    "21": "EXTRA BanYa Remix S21"
 }

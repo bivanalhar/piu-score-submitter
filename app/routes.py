@@ -26,7 +26,8 @@ def home():
         {'comp_name' : '18 Again', 'code' : "E1", 'status': 0},
         {'comp_name' : 'Oriental Sounds?', 'code' : "E2", 'status': 0},
         {'comp_name' : 'Mini-Tourney 2', 'code' : "MT2", 'status': 0},
-        {'comp_name': 'IPPT', 'code': "E3", 'status': 1}
+        {'comp_name': 'IPPT', 'code': "E3", 'status': 0},
+        {'comp_name': 'Mini-Challenge #9', 'code': "E4", 'status': 1}
     ]
     return render_template(
         "main.html",
