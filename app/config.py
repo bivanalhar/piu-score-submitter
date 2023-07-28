@@ -3,10 +3,11 @@ events = {
     "E1" : "18 Again",
     "E2" : "Oriental Sounds?",
     "E3" : "IPPT",
-    "E4" : "Mini Challenge #9"
+    "E4" : "Mini Challenge #9",
+    "E5" : "Mini Challenge #10",
 }
 
-current_event = "E4"
+current_event = "E5"
 
 charts = {
     "1" : "Papa Gonzales",
