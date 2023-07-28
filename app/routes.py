@@ -27,7 +27,8 @@ def home():
         {'comp_name' : 'Oriental Sounds?', 'code' : "E2", 'status': 0},
         {'comp_name' : 'Mini-Tourney 2', 'code' : "MT2", 'status': 0},
         {'comp_name': 'IPPT', 'code': "E3", 'status': 0},
-        {'comp_name': 'Mini-Challenge #9', 'code': "E4", 'status': 1}
+        {'comp_name': 'Mini-Challenge #9', 'code': "E4", 'status': 0},
+        {'comp_name': 'Mini-Challenge #10', 'code': "E5", 'status': 1},
     ]
     return render_template(
         "main.html",

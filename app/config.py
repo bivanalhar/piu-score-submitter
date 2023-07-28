@@ -32,5 +32,9 @@ charts = {
 
     "19": "Final Audition Ep 1 S20",
     "20": "Chicken Wing S20",
-    "21": "EXTRA BanYa Remix S21"
+    "21": "EXTRA BanYa Remix S21",
+
+    "22": "Tek Club Copenhagen S17",
+    "23": "Moonlight S19",
+    "24": "Beat the Ghost S20",
 }
