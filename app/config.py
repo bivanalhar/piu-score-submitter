@@ -5,9 +5,10 @@ events = {
     "E3" : "IPPT",
     "E4" : "Mini Challenge #9",
     "E5" : "Mini Challenge #10",
+    "E6" : "Phoenix Euphoria",
 }
 
-current_event = "E5"
+current_event = "E6"
 
 charts = {
     "1" : "Papa Gonzales",
@@ -38,4 +39,6 @@ charts = {
     "22": "Tek Club Copenhagen S17",
     "23": "Moonlight S19",
     "24": "Beat the Ghost S20",
+
+    "25": "Euphorianic D!!",
 }
