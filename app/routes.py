@@ -3,6 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 from app import web, db
+from app.badge import get_user_badges
 from app.config import charts, current_event, events
 from app.models import User, Score, Chart
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, SubmissionForm1, CommaSeparatedUserInputForm, IpptCalculatorForm
@@ -244,7 +245,9 @@ def user(username):
     if len(top_scores) == 0:
         top_scores = None
 
-    return render_template("user.html", title = "Profile", user = user, top_scores = top_scores, max_set_score = max_total_set_score, scores = all_scores, events_map = events, piu_title = title)
+    badges = get_user_badges(all_scores)
+
+    return render_template("user.html", title = "Profile", user = user, top_scores = top_scores, max_set_score = max_total_set_score, scores = all_scores, events_map = events, piu_title = title, badges = badges)
 
 @web.route('/pairer', methods=['GET', 'POST'])
 def pairer():
