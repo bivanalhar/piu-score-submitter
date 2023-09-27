@@ -17,6 +17,13 @@ available_badges = [
     Badge("Papa Driller", "label label-warning", bl.papa_driller),
     Badge("I passed IPPT!", "label label-success", bl.pass_ippt),
     Badge("Phoenix Euphoria", "label label-primary", bl.phoenix_euphoria),
+
+    Badge("Fly like an airplane", "label label-success", bl.badge_e7_airplane),
+    Badge("9-to-5 fighter", "label label-danger", bl.badge_e7_rip),
+    Badge("I'm a pirate", "label label-success", bl.badge_e7_pirate),
+    Badge("Blue bear", "label label-primary", bl.badge_e7_teddy_bear),
+    Badge("Rude?", "label label-warning", bl.badge_e7_nxde),
+    Badge("Beautiful brackets", "label label-danger", bl.badge_e7_beautiful_liar),
 ]
 
 

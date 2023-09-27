@@ -30,7 +30,8 @@ def home():
         {'comp_name': 'IPPT', 'code': "E3", 'status': 0},
         {'comp_name': 'Mini-Challenge #9', 'code': "E4", 'status': 0},
         {'comp_name': 'Mini-Challenge #10', 'code': "E5", 'status': 0},
-        {'comp_name': 'Phoenix Euphoria', 'code': "E6", 'status': 1}
+        {'comp_name': 'Phoenix Euphoria', 'code': "E6", 'status': 1},
+        {'comp_name': 'Badge Collector', 'code': "E7", 'status': 2}
     ]
     return render_template(
         "main.html",

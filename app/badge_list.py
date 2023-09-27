@@ -18,3 +18,26 @@ def phoenix_euphoria(score):
         return True
     return False
 
+
+def badge_e7_airplane(score):
+    pass
+
+
+def badge_e7_rip(score):
+    pass
+
+
+def badge_e7_pirate(score):
+    pass
+
+
+def badge_e7_teddy_bear(score):
+    pass
+
+
+def badge_e7_nxde(score):
+    pass
+
+
+def badge_e7_beautiful_liar(score):
+    pass

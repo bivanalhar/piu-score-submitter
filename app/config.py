@@ -6,6 +6,7 @@ events = {
     "E4" : "Mini Challenge #9",
     "E5" : "Mini Challenge #10",
     "E6" : "Phoenix Euphoria",
+    "E7" : "Badge Collector",
 }
 
 current_event = "E6"
@@ -41,4 +42,12 @@ charts = {
     "24": "Beat the Ghost S20",
 
     "25": "Euphorianic D!!",
+
+    "26": "Airplane D18",
+    "27": "RIP D18",
+    "28": "Pirate D19",
+    "29": "Teddy Bear D19",
+    "30": "Storm D20",
+    "31": "Nxde D21",
+    "32": "Beautiful Liar D22",
 }
