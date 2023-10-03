@@ -20,24 +20,42 @@ def phoenix_euphoria(score):
 
 
 def badge_e7_airplane(score):
-    pass
+    if score.chart == "Airplane D18" and score.finalScore >= 97:
+        return True
+    return False
 
 
 def badge_e7_rip(score):
-    pass
+    if score.chart == "RIP D18" and score.finalScore >= 97:
+        return True
+    return False
 
 
 def badge_e7_pirate(score):
-    pass
+    if score.chart == "Pirate D19" and score.finalScore >= 97:
+        return True
+    return False
 
 
 def badge_e7_teddy_bear(score):
-    pass
+    if score.chart == "Teddy Bear D19" and score.finalScore >= 97:
+        return True
+    return False
+
+
+def badge_e7_storm(score):
+    if score.chart == "Storm D20" and score.finalScore >= 97:
+        return True
+    return False
 
 
 def badge_e7_nxde(score):
-    pass
+    if score.chart == "Nxde D21" and score.finalScore >= 97:
+        return True
+    return False
 
 
 def badge_e7_beautiful_liar(score):
-    pass
+    if score.chart == "Beautiful Liar D22" and score.finalScore >= 97:
+        return True
+    return False

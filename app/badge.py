@@ -22,6 +22,7 @@ available_badges = [
     Badge("9-to-5 fighter", "label label-danger", bl.badge_e7_rip),
     Badge("I'm a pirate", "label label-success", bl.badge_e7_pirate),
     Badge("Blue bear", "label label-primary", bl.badge_e7_teddy_bear),
+    Badge("Darkness storm", "label label-success", bl.badge_e7_storm),
     Badge("Rude?", "label label-warning", bl.badge_e7_nxde),
     Badge("Beautiful brackets", "label label-danger", bl.badge_e7_beautiful_liar),
 ]

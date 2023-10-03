@@ -9,7 +9,7 @@ events = {
     "E7" : "Badge Collector",
 }
 
-current_event = "E6"
+current_event = "E7"
 
 charts = {
     "1" : "Papa Gonzales",
