@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, PasswordField, SubmitField, IntegerField, SelectField, FloatField
-from wtforms.validators import ValidationError, DataRequired, Email
+from wtforms.validators import ValidationError, DataRequired, Email, NumberRange
 from wtforms.validators import EqualTo, Length
 
 from app.models import User
@@ -52,6 +52,7 @@ class SubmissionForm1(FlaskForm):
     good = IntegerField('Good')
     bad = IntegerField('Bad')
     miss = IntegerField('Miss')
+    max_combo = IntegerField('Max Combo', validators=[NumberRange(min=1)])
     set_number = IntegerField('Set Number')
     submit = SubmitField("Submit")
 

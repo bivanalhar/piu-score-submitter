@@ -39,6 +39,7 @@ class Score(db.Model):
     good = db.Column(db.Integer, default = 0)
     bad = db.Column(db.Integer, default = 0)
     miss = db.Column(db.Integer, default = 0)
+    maxCombo = db.Column(db.Integer, default = 0)
     finalScore = db.Column(db.Float)
     setNumber = db.Column(db.Integer, default = 1)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -50,6 +51,11 @@ class Score(db.Model):
         numerator = perfect + 0.8*great + 0.5*good + 0.1*bad
         denominator = perfect + great + good + bad + miss
         self.finalScore = int(numerator * 10000000 / denominator) / 100000
+
+    def set_phoenix_score(self, perfect, great, good, bad, miss, max_combo):
+        note_weight = perfect + 0.6 * great + 0.2 * good + 0.1 * bad
+        total_note = perfect + great + good + bad + miss
+        self.finalScore = int((99.5 * note_weight + 0.5 * max_combo) * 100000 / total_note) / 100000
 
 class Chart(db.Model):
     id = db.Column(db.Integer, primary_key = True)

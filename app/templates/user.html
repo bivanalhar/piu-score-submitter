@@ -74,6 +74,7 @@
                 <th><b>Good</b></th>
                 <th><b>Bad</b></th>
                 <th><b>Miss</b></th>
+                <th><b>Max Combo</b></th>
                 <th><b>Set Number</b></th>
                 <th><b>FINAL SCORE</b></th>
             </tr>
@@ -86,6 +87,7 @@
                 <td>{{ details.good }}</td>
                 <td>{{ details.bad }}</td>
                 <td>{{ details.miss }}</td>
+                <td>{{ details.maxCombo if details.maxCombo else "-" }}</td>
                 <td>{{ details.setNumber }}</td>
                 <td><b>{{ details.finalScore }}</b></td>
             </tr>
@@ -136,6 +138,7 @@
                 <th><b>Good</b></th>
                 <th><b>Bad</b></th>
                 <th><b>Miss</b></th>
+                <th><b>Max Combo</b></th>
                 <th><b>Set Number</b></th>
                 <th><b>FINAL SCORE</b></th>
                 <th><b>Action</b></th>
@@ -149,6 +152,7 @@
                 <td>{{ details.good }}</td>
                 <td>{{ details.bad }}</td>
                 <td>{{ details.miss }}</td>
+                <td>{{ details.maxCombo if details.maxCombo else "-" }}</td>
                 <td>{{ details.setNumber }}</td>
                 <td><b>{{ details.finalScore }}</b></td>
                 <td><a href="{{ url_for('delete_score', scoreid = details.id) }}">Delete</a></td>

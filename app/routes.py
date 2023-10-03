@@ -165,9 +165,14 @@ def score():
     if form.validate_on_submit():
         score = Score(username = current_user.username, perfect = form.perfect.data, great = form.great.data,
             event = form.event.data, good = form.good.data, bad = form.bad.data, miss = form.miss.data,
-            chart = charts[form.chart.data], setNumber = form.set_number.data)
-        score.set_totalScore(form.perfect.data, form.great.data, form.good.data,
-            form.bad.data, form.miss.data)
+            chart = charts[form.chart.data], setNumber = form.set_number.data, maxCombo = form.max_combo.data)
+        if form.max_combo.data > 0:
+            score.set_phoenix_score(
+                form.perfect.data, form.great.data, form.good.data,
+                form.bad.data, form.miss.data, not form.max_combo.data,
+            )
+        else:
+            score.set_totalScore(form.perfect.data, form.great.data, form.good.data, form.bad.data, form.miss.data)
         db.session.add(score)
         db.session.commit()
 
