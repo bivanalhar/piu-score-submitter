@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>Skill Specialist</h1>
+
+    <h2>Basic Information</h2>
+    <strong>Mini Challenge #13</strong>: Skill Specialist<br/>
+	<strong>Timeline</strong>: Until 19 November 2023<br/>
+	<p>
+	    <strong>Description: </strong>Improve specific skills by playing these specifically crafted UCS!
+	</p>
+	<strong>Scoring System</strong>: Mr Weq's Phoenix Score<br/>
+    <img src="https://pbs.twimg.com/media/Fv5Y-GSaMAA2x9v?format=jpg" class="img-responsive">
+
+	<h2>Featured Songs</h2>
+	<ol type="1">
+        <li>(Jacks) Showdown S19</li>
+        <li>(Drills) Selfishness S20</li>
+        <li>(Twists) After a Thousand Years S22</li>
+        <li>(Half) Amai Yuuwaku Dangerous D18</li>
+        <li>(Stairs) Pumping Up D20</li>
+        <li>(Brackets) Kokugen Kairou Labyrinth D20</li>
+    </ol>
+
+	<h2>Mechanics</h2>
+	Attempt as many charts as you can. You can attempt each of them multiple times!
+
+	<h2>Objectives</h2>
+	Highest score win!
+
+    <h2>Other Information</h2>
+    <p>
+        Additional information for the mini-challenge are as follows:
+        <ul>
+            <li>Players are allowed to attempt each chart as many times as possible within the time period, and
+                only the highest total score will be used in the final calculation.</li>
+            <li>Currently, there is no requirement to upload the photo of your scores. However, please fill in the form
+                provided <a href="{{ url_for('score') }}">here</a> honestly.</li>
+        </ul>
+        Enjoy the competition, and may the odds be ever in your favor.
+    </p>
+
+    <h2>Leaderboards</h2>
+    <p>The current standing of the competition is as follows:
+        {% if final %}
+        <style>
+            .secondTable, .secondTable th, .secondTable td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            .secondTable th, .secondTable td {
+                padding: 10px;
+                text-align: center;
+            }
+            .secondTable th {
+                background-color: greenyellow;
+                font-size: 17px;
+            }
+            .secondTable colgroup {
+                width: 50px
+            }
+        </style>
+        <div>
+            <table class="secondTable">
+                <colgroup>
+                    <col style="width:50px">
+                    <col style="width:200px">
+                    <col style="width:150px">
+                </colgroup>
+                <tr>
+                    <th><b>Rank</b></th>
+                    <th><b>Username</b></th>
+                    <th><b>FINAL SCORE</b></th>
+                </tr>
+                {% for details in final %}
+                <tr>
+                    <td>{{ details.rank }}</td>
+                    <td>{{ details.username }}</td>
+                    <td><b>{{ details.totalScore }}</b></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>No existing user has attempted the event thus far</p>
+        {% endif %}
+    </p>
+{% endblock %}

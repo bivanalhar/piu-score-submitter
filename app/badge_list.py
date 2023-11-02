@@ -59,3 +59,15 @@ def badge_e7_beautiful_liar(score):
     if score.chart == "Beautiful Liar D22" and score.finalScore >= 92:
         return True
     return False
+
+
+def badge_e8_after_a_thousand_years(score):
+    if score.chart == "After a Thousand Years S22" and score.finalScore >= 94:
+        return True
+    return False
+
+
+def badge_e8_pumping_up(score):
+    if score.chart == "Pumping Up D20" and score.perfect + score.great + score.good + score.bad + score.miss == 666:
+        return True
+    return False

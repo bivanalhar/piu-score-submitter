@@ -25,6 +25,9 @@ available_badges = [
     Badge("Darkness storm", "label label-success", bl.badge_e7_storm),
     Badge("Rude?", "label label-warning", bl.badge_e7_nxde),
     Badge("Beautiful brackets", "label label-danger", bl.badge_e7_beautiful_liar),
+
+    Badge("Waist breaker", "label label-primary", bl.badge_e8_after_a_thousand_years),
+    Badge("Satanic", "label label-danger", bl.badge_e8_pumping_up),
 ]
 
 

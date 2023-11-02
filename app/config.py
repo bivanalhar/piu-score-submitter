@@ -7,9 +7,10 @@ events = {
     "E5" : "Mini Challenge #10",
     "E6" : "Phoenix Euphoria",
     "E7" : "Badge Collector",
+    "E8" : "Skill Specialist",
 }
 
-current_event = "E7"
+current_event = "E8"
 
 charts = {
     "1" : "Papa Gonzales",
@@ -50,4 +51,11 @@ charts = {
     "30": "Storm D20",
     "31": "Nxde D21",
     "32": "Beautiful Liar D22",
+
+    "33": "Showdown S19",
+    "34": "Selfishness S20",
+    "35": "After a Thousand Years S22",
+    "36": "Amai Yuuwaku Dangerous D18",
+    "37": "Pumping Up D20",
+    "38": "Kokugen Kairou Labyrinth D20"
 }
