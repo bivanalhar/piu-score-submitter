@@ -11,7 +11,7 @@ from app.ippt_calculator import calculate_ippt_score, categories
 
 from datetime import datetime
 
-import git, random
+import git, json, random
 
 @web.before_request
 def before_request():
@@ -310,3 +310,35 @@ def delete_score(scoreid):
 
     flash("Score with ID {} has been deleted.".format(scoreid))
     return redirect(url_for('user', username=current_user.username))
+
+# TODO: show this on frontend navbar
+@web.route("/single/<level>")
+def single(level):
+    # Opening JSON file
+    with open('vizinput/s' + level + '.json') as json_file:
+        data = json.load(json_file)
+    return render_template('tier.html', data=data, title='S'+level)
+
+
+@web.route("/double/<level>")
+def double(level):
+    # Opening JSON file
+    with open('vizinput/d' + level + '.json') as json_file:
+        data = json.load(json_file)
+    return render_template('tier.html', data=data, title='D'+level)
+
+
+@web.route("/detail/single/<level>")
+def detail_single(level):
+    # Opening JSON file
+    with open('vizinput/s' + level + '.json') as json_file:
+        data = json.load(json_file)
+    return render_template('detail.html', data=data, title='S'+level)
+
+
+@web.route("/detail/double/<level>")
+def detail_double(level):
+    # Opening JSON file
+    with open('vizinput/d' + level + '.json') as json_file:
+        data = json.load(json_file)
+    return render_template('detail.html', data=data, title='D'+level)
