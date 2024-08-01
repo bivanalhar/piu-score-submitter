@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h2>Rival (Work in Progress)</h2><br>
+    <p>Compare your scores with other players' scores and get competitive!</p>
+
+    <h4>Step 1: Download your scores</h4>
+    <ol>
+        <li>Go to piugame.com and login</li>
+        <li>
+            After logging in, navigate to your browser's DevTools.
+            In Chrome, this can be done by right-clicking the webpage and selecting 'Inspect'
+        </li>
+        <li>Copy the script below and paste it in 'Console'</li>
+        <li>A file <code>my_record.json</code> will be downloaded once done</li>
+    </ol>
+
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Expand script
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <pre class="brush: js">
+async function scoreScrapper() {
+    // get the last page
+    const resp = await fetch('https://piugame.com/my_page/my_best_score.php');
+    const parser = new DOMParser();
+    const htmlDoc = parser.parseFromString(await resp.text(), 'text/html');
+    const lastPage = htmlDoc.querySelector('div.board_paging').querySelector('i.xi.last').parentNode.getAttribute('onclick').split("=").at(-1).split("'").at(0);
+
+    // scrap scores page-by-page
+    var finalObj = [];
+    for (let pageIdx = 1; pageIdx <= lastPage; pageIdx++) {
+        let page = await fetch(`https://piugame.com/my_page/my_best_score.php?page=${pageIdx}`);
+        let pageParser = new DOMParser();
+        let pageHtml = pageParser.parseFromString(await page.text(), 'text/html');
+
+        let songs = pageHtml.querySelectorAll('div.song_name');
+        let scores = pageHtml.querySelectorAll('div.txt_v');
+        let levels = pageHtml.querySelectorAll('div.level_con');
+
+        for (let idx = 0; idx < songs.length; idx++) {
+            let song = songs[idx]
+            let score = scores[idx];
+            let level = levels[idx];
+
+            let numericalScore = Number(score.textContent.trim().replace(',', ''));
+            let songTitle = song.textContent.trim();
+
+            // level
+            let modeText = level.querySelector('div.tw').querySelector('img').getAttribute('src');
+            let mode = "CO-OP";
+            if (modeText.includes("d_text")) {
+                mode = "Double";
+            } else if (modeText.includes("s_text")) {
+                mode = "Single";
+            }
+
+            let numericalLevel;
+            if (mode !== "CO-OP") {
+                let twoDigit = level.querySelectorAll('div.imG');
+                let firstDigit = twoDigit[0].querySelector('img').getAttribute('src').split(".png").at(0).at(-1);
+                let secondDigit = twoDigit[1].querySelector('img').getAttribute('src').split(".png").at(0).at(-1);
+                numericalLevel = Number(firstDigit + secondDigit);
+            } else {
+                let twoDigit = level.querySelectorAll('div.imG');
+                let secondDigit = twoDigit[1].querySelector('img').getAttribute('src').split(".png").at(0).at(-1);
+                numericalLevel = Number(secondDigit);
+            }
+
+            finalObj.push({
+                "song": songTitle,
+                "score": numericalScore,
+                "mode": mode,
+                "level": numericalLevel
+            })
+        }
+        console.log(`Completed page ${pageIdx} successfully`);
+    }
+
+    // save as json
+    const outputJson = JSON.stringify(finalObj);
+    var a = document.createElement("a");
+    var file = new Blob([outputJson], {type: "text/plain"});
+    a.href = URL.createObjectURL(file);
+    a.download = "my_record.json";
+    a.click();
+}
+
+scoreScrapper();
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <h4>Step 2: Upload your scores here</h4>
+    <form enctype="multipart/form-data" method="post" action="{{ url_for('upload_score') }}">
+        <div class="form-group">
+            <label for="formFile" class="form-label">Upload my_record.json here</label>
+            <input class="form-control" type="file" accept=".json" id="formFile" name="formFile" required>
+        </div>
+        <input type="submit">
+    </form>
+
+{% endblock %}

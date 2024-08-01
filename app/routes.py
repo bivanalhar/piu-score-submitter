@@ -11,7 +11,7 @@ from app.ippt_calculator import calculate_ippt_score, categories
 
 from datetime import datetime
 
-import git, json, random
+import git, json, random, os
 
 @web.before_request
 def before_request():
@@ -311,6 +311,28 @@ def delete_score(scoreid):
 
     flash("Score with ID {} has been deleted.".format(scoreid))
     return redirect(url_for('user', username=current_user.username))
+
+
+@web.route('/rival')
+@login_required
+def rival():
+    return render_template('rival.html')
+
+
+@web.route('/upload_score', methods=['POST'])
+@login_required
+def upload_score():
+    uploaded_file = request.files['formFile']
+    filename = uploaded_file.filename
+    if filename != '':
+        file_ext = os.path.splitext(filename)[1]
+        if file_ext not in ['.json']:
+            flash("File has wrong extension")
+            return redirect(url_for("rival"))
+    uploaded_file.save(os.path.join('scores/', current_user.username + '.json'))
+    flash("File has been uploaded")
+    return redirect(url_for("rival"))
+
 
 # TODO: show this on frontend navbar
 @web.route("/single/<level>")

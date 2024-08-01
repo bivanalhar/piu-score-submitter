@@ -12,3 +12,4 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['bivan.alzacky@gmail.com']
+    MAX_CONTENT_LENGTH = 1024 * 1024
