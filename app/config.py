@@ -11,7 +11,7 @@ events = {
     "E9" : "Mini Challenge #14",
 }
 
-current_event = "E9"
+current_event = ""
 
 charts = {
     "1" : "Papa Gonzales",
